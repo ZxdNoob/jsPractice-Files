@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>探究清除上一个类名添加当前类名</title>
+    <link rel="shortcut icon" href="../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+    <style>
+        html{font:"Microsoft Yahei" 20px;color:#666;}
+        body,div,span,button{margin:0;padding:0;}
+        #box{width:90%;max-width:900px;min-width:300px;margin:20px auto;text-align:center;}
+        span{display: inline-block;width:10%;height:60px;margin-right:10px;background-color:hsla(260,70%,60%,.2);}
+        .active{background-color:rgb(251, 219, 101);}
+        .btnGroup{text-align: center;}
+        button{outline:none;width:100px;height:36px;line-height:30px;border-radius:6px;border:none;background-color:rgb(159, 214, 194);color:#aaa;cursor:pointer;}
+        button:hover{
+            color: hsl(300, 80%, 70%);
+        }
+    </style>
+    <script>
+        onload = function(){
+            var box = document.getElementById("box");
+            var span = box.getElementsByTagName("span");
+            var btn = document.getElementById("run");
+            var isRun = true;
+            var run = null;
+            var ranA = [];                         //创建一个空数组用来存放随机数继而操作样式
+            var oldN;                              //定义上一个随机数
+            var newN;                              //定义当前的随机数
+            btn.onclick = function(){
+                if(isRun){
+                    this.innerHTML = "停止";
+                    isRun = false;
+                    clearInterval(run);
+                    run = setInterval(ranNum,600);
+                }else{
+                    this.innerHTML = "继续";
+                    clearInterval(run);
+                    isRun = true;
+                }
+            }
+            function ranNum(){
+                var randN = Math.round(Math.random()*(span.length-1));
+                ranA.push(randN);
+                if(oldN === undefined && ranA.length == 1){
+                //当oldN未定义且数组长度为1，即第一次点击时
+                    oldN = ranA[0];
+                    span[oldN].className = "active";
+                }else{
+                    span[oldN].className = "";
+                    ranA.shift();
+                //当数组长度为2后将数组的第一个数删除，始终保持数组第一个元素是最新的随机数
+                    newN = ranA[0];
+                    span[newN].className = "active";
+                    oldN = newN;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="box">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="btnGroup">
+        <button id="run">开始</button>
+    </div>
+</body>
+</html>

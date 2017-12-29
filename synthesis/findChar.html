@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>找到重复次数最多的字符，并算出这个字符重复了多少次</title>
+    <link rel="shortcut icon" href="../../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+    <script>
+        var str = "abcdefghijklmnopqrstuvwxyz0123456789";   //预先定义一个字符串
+        var arr = str.split("");
+        var newA = [];
+        var ranChar;
+        function ran(len){                  //len形参用来限制随机出来的字符串长度
+            for(var i = 0;i<len;i++){
+                var ranN = Math.round(Math.random()*(arr.length-1));
+                ranStr = arr[ranN];                            //随机出现的字符
+                newA.push(ranStr);                             //每次随机出现的字符都作为新元素添加到数组中
+            }
+            var ranStr = newA.join("");                        //将收集了随机字符的数组转为字符串
+            ranChar = ranStr;                                  //将这个字符串作为全局变量ranChar的值
+        }
+        ran(20);                            //调用随机字符串函数
+        var max = 0;                        //初始化重复次数
+        var char;                           //预存一个变量作为重复次数最多的字符
+
+        //封装查找随机字符串函数
+        function search(str){
+            var note = {};                                 //创建一个空对象，用来记录字符
+            for(var i = 0;i<str.length;i++){               //遍历传入的字符串
+                if(!note[str[i]]){                         //当对象还没有记录任何字符时
+                    note[str[i]] = str[i];                 //对象的键值是同名的字符串的每个字符
+                }else{
+                    note[str[i]] += str[i];                //重复的字符每重复一次就拼接一次
+                }
+            }
+            for(var i = 0;i<str.length;i++){               //再次遍历传入的字符串
+                if(note[str[i]].length > max){
+                    max = note[str[i]].length;             //最大数就是对象里面最大的属性值长度
+                    char = str[i];                         //找到出现次数最多的字符
+                }
+            }
+            console.log("在字符串"+"\""+str+"\""+"中，出现次数最多的字符是"+char+"\n"+"它一共出现了"+max+"次");
+        }
+        search(ranChar);
+        /*var str2 = "abcdefffoooklskldjskjdujjpkj";
+        var obj = {};
+        for(var i = 0;i<str2.length;i++){
+            if(!obj[str2[i]]){                      //当obj为空时
+                obj[str2[i]] = str2[i];             //对象的键值是同名的字符串的每个字符
+            }else{
+                obj[str2[i]] += str2[i];            //重复的字符每重复一次就拼接一次
+            }
+        }
+
+        for(var i = 0;i<str2.length;i++){
+            if(obj[str2[i]].length > max){
+                max = obj[str2[i]].length;              //将最大长度赋给max
+                char = str2[i];
+            }
+        }
+        console.log("在字符串"+"\""+str2+"\""+"中，出现次数最多的字符是"+char+"\n"+"它一共出现了"+max+"次");*/
+    </script>
+</head>
+<body>
+</body>
+</html>

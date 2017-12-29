@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>About This</title>
+    <link rel="shortcut icon" href="../../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+</head>
+<body>
+</body>
+<script>
+    //全局下的this，指向window
+    console.log(this,"-全局环境中-");
+    //全局环境下函数内的this，指向window
+    function my(){
+        console.log(this,"-一般函数中-");
+    }
+    my();
+    //作为对象的方法，this指代对象
+    var o = {
+        fn : function(){
+            console.log(this,"---对象的方法---");
+        }
+    }
+    o.fn();
+    //构造函数里的this指向实例对象
+    function Person(name,age){
+        this.name = name;
+        this.age = age;
+        this.callMe = function(){
+            console.log(this,"---构造函数中---")
+        }
+    }
+    var pers1 = new Person("王二",19);
+    pers1.callMe();
+    //apply()或者call()方法中的this
+    var o2 = {};
+    o2.style = "o2的style";
+    o2.s = foo;
+    window.style = "Window的style";
+    function foo(){
+        console.log(this.style);
+    }
+    o2.s.apply();                   // window，参数为空时this默认指向全局的window
+    o2.s.apply(o2);                 // this指代的是apply()方法里的第一个参数，这里传了o2自己，所以指向它自己
+
+
+    //经典考验this指向的题目
+
+    var name = "222";
+    var a = {
+        name : "111",
+        say : function(){
+            console.log(this.name);
+        }
+    }
+    var fun = a.say;        //用一个全局变量承接这个函数
+    fun();                  //打印出“222”，因为是全局变量来调用它，所以this指向window
+    a.say();                //对象的方法，this指向对象，所以打印出"111"
+
+    var b = {
+        name : "333",
+        say : function(fun){
+            fun();
+        }
+    }
+    b.say(a.say);   //  将a.say作为b.say的形参,然后调用，但是fun没有被a或者b调用,this指向window，所以打印出"222"
+    b.say = a.say;
+    b.say();        // b.say()，是b调用了say()，this指向b，所以打印出"333"
+</script>
+</html>

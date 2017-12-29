@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>一次性定时器的运用</title>
+	<link rel="shortcut icon" href="../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+	<style>
+		html{font-size:18px;color:#666;font-family:"Microsoft Yahei";}
+		body,div{margin:0;padding:0;}
+		div{margin-top:20px;text-align:center;}
+		#content{margin-left:20%;width:20%;height:500px;background-color:rgba(60,100,30,0.6);float:left;color:white;position:relative;}
+		#content span{display: inline-block;width:20%;height:60px;background-color:brown;line-height:60px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);}
+		#title{float:left;margin-left:30px;width:10%;background-color:rgba(200,200,100,0.7);}
+		#title{display:none;transition: all 0.6s ease;}
+		#title:hover{color:rgba(200,30,20,0.6);}
+	</style>
+	<script>
+		window.onload = function(){
+			var cont = document.getElementsByTagName("span")[0];
+			var tit = document.getElementById("title");
+			var timer;
+			var t = 600;
+			cont.onmouseover = show;
+			cont.onmouseout = hide;
+			tit.onmouseover = show;
+			tit.onmouseout = hide;
+			function show(){
+				clearTimeout(timer);			//很关键，防止因进行多次执行而导致的失控局面
+				tit.style.display="block";
+			}
+			function hide(){
+				timer = setTimeout(function(){
+					tit.style.display="none";
+				},t);						   //让元素不要隐藏得太快，方便后续可以将鼠标移到该元素上
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id="content">
+		<span>主体</span>
+	</div>
+	<div id="title">
+		主体标题介绍：Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor veritatis atque illo nihil illum tenetur, quis dolores officiis corrupti, sunt natus cumque, magnam reprehenderit in sed blanditiis. Quidem, eveniet, eaque.
+	</div>
+</body>
+</html>

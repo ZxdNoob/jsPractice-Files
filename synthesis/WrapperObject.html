@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>三大包装对象</title>
+    <link rel="shortcut" href="../../jQueryPractices/img/myFavicon.ico" type="image/icon" />
+</head>
+<body>
+</body>
+    <script>
+        var num = new Number(123);                      //Number包装对象
+        var str = new String("今天是平安夜！");          //String包装对象
+        var bol = new Boolean(true);                   //Boolean包装对象
+        //经过包装对象实例化的原始值，它的类型变成object
+        console.log(typeof num+"----num");
+        console.log(typeof str+"----str");
+        console.log(typeof bol+"----bol");
+        var num1 = 2;
+        var str1 = "我";
+        var bol1 = true;
+        console.log(typeof num1+"----num1");
+        console.log(typeof str1+"----str1");
+        console.log(typeof bol1+"----bol1");
+        //valueOf()和toString()
+        var vof1 = num.valueOf();
+        var vof2 = num.toString();
+        console.log(typeof vof1);                    //valueOf返回被操作数原始值
+        console.log(typeof vof2);                    //toString将被操作数原始值转换成了字符串的形式
+        var arr = ["AcaefeSFERGferigFER","ChIna","NumBer","OnE"];
+        var s = String.prototype.toUpperCase.apply(arr);  //可以让数组使用包装对象自带方法
+        console.log(s);
+        //Boolean既可以作为包装对象，也可以作为工具方法，前者生成的是一个对象，后者是生成一个Boolean值，于是就有下面不同执行情况
+        //作为工具方法时
+        if(Boolean(false)){                 //产生了一个原始布尔值：false
+            console.log(111);               //判断结果为true时执行
+        }else{
+            console.log(222);               //判断结果为false时执行
+        }
+        //作为构造器时
+        if(new Boolean(false)){             //Boolean构造器实例化了false对象，所有对象都为true
+            console.log(111);               //判断结果为true时执行
+        }else{
+            console.log(222);               //判断结果为false时执行
+        }
+    </script>
+</html>

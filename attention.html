@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>需要注意的点</title>
+	<link rel="shortcut icon" href="../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+	<script>
+			//同一行语句中，如果return后面为空，系统会自动添加分号，
+			//会导致将完整的return语句分成两行的话会让return后面的语句得不到执行，且返回的是undefined
+			/*function foo(){
+				var a = 0;
+				return console.log(a);
+			}
+			foo();			//打印出0
+			//让return独占一行后
+			function foo2(){
+				var a = 0;
+				return                            //看作return undefined;
+				console.log(a);					  //return后的这个语句将不执行
+			}
+			console.log(foo2());*/
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

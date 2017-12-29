@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>在任意个数字中求出最大数</title>
+    <link rel="shotcut icon" href="../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+    <style>
+        html{font:20px "Microsoft Yahei";color:#666;}
+        body,div,button,input,p,span{margin:0;padding:0;}
+        input,button{outline:none;}
+        button{width:66px;height:36px;line-height:30px;border:none;border-radius:6px;box-shadow:-1px 2px 7px 1px rgb(10,20,150);background-color:
+            rgb(20,56,100);color:#dfdeff;cursor:pointer;}
+        input{padding-left:8px;width:70px;height:32px;line-height:32px;border:1px solid hsl(202, 100%, 85%);margin-right:20px;}
+        #content{text-align:center;width:600px;margin:20px auto;}
+        button:hover{color: #b3e3ff;}
+        #show{width:500px;margin:30px auto;background-color:rgba(233, 100, 70, .8);border:6px solid #a77658;box-shadow:0 0 10px 0 #fea;text-align:center;}
+        p{margin-left:10px;margin-bottom:30px;text-align:left;}
+        #submit{margin-bottom:20px;}
+        span{color:#ffe;}
+    </style>
+</head>
+<body>
+    <div id="content">
+        <input type="text" id="num" placeholder="请输入数字" />
+        <button id="add">添加</button>
+    </div>
+    <div id="show">
+        <p id="msg">您添加的数字有：</p>
+        <button id="submit">提交</button>
+    </div>
+    <script>
+        var cont = document.getElementById("content");
+        var msg = document.getElementById("msg");
+        var number = document.getElementById("num");
+        var addBtn = document.getElementById("add");
+        var confm = document.getElementById("submit");
+        addBtn.onclick = addNum;
+        function addNum(){
+            var num = number.value;
+            if(Number(num) !== NaN){
+                var span = document.createElement("span");
+                span.innerHTML = num+"  ";
+                msg.appendChild(span);
+            }else{
+                alert("请输入数字！");
+            }
+        }
+    </script>
+</body>
+</html>

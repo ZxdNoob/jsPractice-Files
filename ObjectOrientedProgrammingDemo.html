@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>面向对象探究之封装</title>
+    <link rel="shotcut icon" href="../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+</head>
+<script>
+    onload = function(){
+        /*//用面向过程的方式添加div标签并给它设置样式
+        var div = document.createElement("div");
+        div.style.width = "500px";
+        div.style.height = "600px";
+        div.style.border = "2px solid #defe00";
+        div.style.backgroundColor = "rgb(102,200,160)";
+        div.style.margin = "20px auto";
+        document.body.appendChild(div);*/
+
+        //用面向对象的思想对上面进行封装
+        //首先提取对象：div标签   body，再明确所需要的属性和方法:添加元素、设置样式
+        //创建构造函数
+        function Tag(tag){
+            this.tag = document.createElement(tag);             //创建标签
+            this.appendTo = function(node){                     //封装在body中加入这个标签的方法
+                document.body.appendChild(this.tag);
+                return this;                                    //返回实例对象是让实例对象可以链式调用方法
+            };
+            this.css = function(option){                        //封装给标签设置样式的方法
+                for(var k in option){                   //遍历传进来的样式对象，k为对象的属性，option[k]为对象的属性值
+                    this.tag.style[k] = option[k];
+                }
+                return this;                                    //返回实例对象是让实例对象可以链式调用方法
+            };
+        }
+       var div = new Tag("div");
+       div.appendTo().css({"border":"2px solid #defe00","width":"500px","height":"500px","margin":"20px auto",
+                           "backgroundColor":"rgba(102,200,160,.3)"});
+    }
+</script>
+<body>
+</body>
+</html>

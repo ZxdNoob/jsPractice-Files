@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>取模运算小研究</title>
+	<link rel="shortcut icon" href="../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+	<style>
+		ul,li,button{margin:0;padding:0;}
+		ul{width:30%;margin:20% auto;background-color:pink;}
+		li{list-style:none;float:left;}
+		button,input{border:none;color:white;outline:none;cursor:pointer;}
+		button{
+			width:30px;
+			height:30px;
+			border-radius:50%;
+			background-color:blue;
+			line-height:26px;
+			margin-left:20px;
+		}
+		.active{
+			border-color:none;
+			background-color:rgba(95,140,60,0.2);
+			color:hsl(10,100%,66%);
+		}
+		input{
+			width:100px;
+			height:36px;
+			line-height:32px;
+			background-color:rgb(20,30,60);
+			margin-left:60px;
+			border-radius:6px;
+		}
+		input:hover{
+			background-color:yellow;
+			color:rgb(20,30,60);
+		}
+	</style>
+	<script>
+		window.onload = function(){
+			var oUl = document.getElementById("list");
+			var aLi = oUl.getElementsByTagName("li");
+			var oNext = document.getElementById("prev");
+			var aBtn = oUl.getElementsByTagName("button");
+			var t = 3000;
+			var num = 0;
+			var oldBtn;										//前一个按钮预设变量
+			var myIndex;
+			for(var i = 0;i<aLi.length;i++){
+				aBtn[num].className = "active";
+				oldBtn = aBtn[num];			 //将前一个按钮初始化给了第一个
+				aBtn[i].index = i;			  //自定义索引值属性
+				var myIndex = aBtn[i].index;
+				aBtn[i].onclick =function(){
+					/*oldBtn.className = "";
+					oldBtn = this;*/
+					myIndex = this.index;
+					aBtn[myIndex].className = "active";
+				//被点击的添加active，其余的清除active，方案一：先将active全部清除,推荐配合轮播的时候用
+				//方案二是记录前一次点击状态，将其类名清除，给当前被点击的添加类名active
+						for(var i=0;i<aLi.length;i++){
+						aBtn[i].className = "";
+					}
+					aBtn[myIndex].className = "active";
+				}
+			}
+
+			//轮播函数
+			function slider(){
+				myIndex ++;
+				myIndex %= aLi.length;		//取模后，无论myIndex变得多大，都会在0到aLi.length-1之间循环
+				for(var i = 0;i<aLi.length;i++){
+					aBtn[i].className = "";
+				}
+				aBtn[myIndex].className = "active";
+			}
+			setInterval(slider,t);			//轮播
+
+			//前进按钮函数
+			oNext.onclick = function(){
+				slider();
+			}
+		}
+	</script>
+</head>
+<body>
+	<ul id="list">
+		<li><button>1</button></li>
+		<li><button>2</button></li>
+		<li><button>3</button></li>
+		<li><button>4</button></li>
+		<li><button>5</button></li>
+		<li><button>6</button></li>
+	</ul>
+	<input id="prev" type="button" value="向前进" />
+</body>
+</html>

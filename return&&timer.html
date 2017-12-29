@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>return和定时器</title>
+	<link rel="shortcut icon" href="../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+	<style>
+		span,input{display:inline-block;width:100px;height:32px;}
+		body #tabBg,body #selected{
+			cursor:pointer;
+			outline:none;
+			border:none;
+			border-radius:6px;
+			background-color:hsla(200,80%,60%,0.3);
+			margin-right:10px;
+		}
+	</style>
+	<script>
+		/*function test1(){
+			return;					//加与不加return都是一样的,如果没有返回值，默认是未定义undefined
+		}
+		console.log(test1());*/
+		/*function test2(){
+		}
+		console.log(test2());
+
+		function test3(){
+			return window;				//可以返回一个window对象，但是不能返回对象的属性或者方法
+		}
+		test3().onload = function(){	//相当于window.onload =function(){}
+			var btn = getId("btn");		//将"btn"传入进去就获取了id名为"btn"的button按钮
+			var onOff = false;
+			btn.onclick = function(){
+				if(!onOff){
+					this.style.backgroundColor = "rgb(60,20,90)";
+					this.style.color = "rgb(200,200,190)";
+					onOff = true;
+				}else{
+					onOff = false;
+					this.style.backgroundColor = "";
+					this.style.color = "";
+				}
+			}
+			var obj = new Object({name:666,age:66,arr:[1,2,3,4,5,6]});
+			test4(obj.arr);
+		}
+		function getId(id){				//封装一个获取id名的函数
+			return document.getElementById(id);
+		}
+		function test4(o){
+			if(o instanceof Array){
+				console.log(o+"是一个数组！");
+			}
+			else{
+				console.log(o+"不是数组!");
+			}
+		}*/
+
+		/*//简单模拟jQuery的$原理
+		$(function(){
+			var btn = $("btn");
+			var spn = $("span");
+			btn.style.transition = "all 0.6s ease";		//添加过渡效果样式
+			span.style.transition = "all 0.6s ease";
+			var tog = true;
+			btn.onclick = function(){
+				if(tog){
+					$(this).style.fontSize = "26px";
+					spn.style.color = "blue";
+					tog = false;
+				}else{
+					tog = true;
+					$(this).style.fontSize = "";
+					spn.style.color = "";
+				}
+			}
+			num(20);
+			st(6,2);
+		});
+
+		function $(v){
+			if(typeof v === "function"){
+				window.onload = v;				//可以将这里的return省略，因为返回的是window对象
+			}else if(typeof v === "string"){
+				return document.getElementById(v);
+			}else if(typeof v === "object"){
+				return v;
+			}
+		}
+		//一个参数的从小到大排序函数
+		function num(n){
+			var arr = new Array();
+			for(var i=1;i<=n;i++){
+				arr.push(i);
+			}
+			return console.log(arr); //这里的return可以省略
+		}
+		//两个参数的从小到大排序函数
+		function st(a,b){
+			var arr = [];
+			if(a>b){
+				var i = b;
+				var len = a;
+			}else{
+				var i = a;
+				var len = b;
+			}
+			for(;i<=len;i++){
+				arr.push(i);
+			}
+			return console.log(arr); //这里的return可以省略
+		}
+		//对return的总结：
+		//1. 函数名+括号：fn1() ==> return 后面的值；
+		//2. 所有函数默认return的是未定义（undefined)，
+		//也就是说如果一个函数体没有任何代码，加不加retrun，返回的都是undefined；
+		//3. 函数内return完，在return值后面的代码都不再执行*/
+
+		//函数的形参和实参
+		function fn(agm1,agm2,agm3){		//形参，形式上一一对应的是实际传进来的参数
+			console.log(agm1,agm2,agm3);
+			console.log(arguments);
+			console.log(arguments instanceof Array);  //false，说明不属于数组
+			//arguments就是实参的集合，不是数组，但是可以下标方式访问这个实参集合的每个元素
+			for(var i=0;i<arguments.length;i++){
+				console.log(arguments[i]);
+			}
+			arguments[1] = 5;		  //可以用arguments加下标的形式对实参进行修改
+			console.log(arguments);   //将2改成了5，所以变成了1、5、3
+		}
+		fn(1,2,3);							//实参，实际传到函数里的参数
+
+		//getComputedStyle(element)方法和element.currentStyle属性
+		window.onload = function(){
+			var aSpan = document.getElementById("span");
+			// var spanH = getComputedStyle(aSpan).height;
+			// console.log(spanH);
+			//用来获取通过计算机计算后的元素属性，也就是说可以获取到动态属性最终值，IE8及以下版本不支持
+			//getComputedStyle(element)方法
+			//IE8及以下版本可以换成currentStyle属性
+			//于是用下面的属性判断法进行兼容处理
+			if(aSpan.currentStyle){						//首先判断浏览器是不是支持这个currentStyle属性
+				var spanH = aSpan.currentStyle.height; //是的话就说明是IE8及以下版本的浏览器，走这段代码
+				console.log(spanH);
+			}
+			else{
+				var spanH = getComputedStyle(aSpan).height;
+				//不是的话就说明是IE8以上或者是其他浏览器，走这段代码
+				console.log(spanH);
+			}
+
+			//定时器，setInterval(function,time)
+			var timer;						    //初始化定时器，也可以声明成var timer = null
+			var changeBg = document.getElementById("tabBg");
+			var slted = document.getElementById("selected");
+			//var aBgcolor = ["red","orange","yellow","green","blue","pink","royalblue","purple","chocolate","silver","tan","snow","black","gray","rosybrown"]; //背景色
+		    var index = 0;
+		    var t = 2000;                      //设置时间
+		    var bd = document.body;
+		    changeBg.onclick = function(){
+		    	clearInterval(timer);
+		    	//先清除，很关键很关键，这步操作可以防止重复按的时候出现控制不了的情况
+		    	timer = setInterval(function(){
+		    		//index ++;
+		    		// index = Math.floor(Math.random()*(aBgcolor.length));
+		    		//索引值在0到背景颜色种数-1之间的数随机产生，从而达到随机切换背景的目的
+		    		/*index %= aBgcolor.length;		//让索引值在0到背景色种数-1之间循环*/
+		    		// var bg = aBgcolor[index];
+		    		var r = Math.floor(Math.random()*255);		//rgba中随机的red值
+		    		var g = parseInt(Math.random()*255);		//rgba中随机的green值
+		    		var b = Math.floor(Math.random()*255);		//rgba中随机的blue值
+		    		var a = Math.floor(Math.random()*10)/10;	//rgba中随机的alpha值
+		    		var str = ",";
+		    		// bd.style.backgroundColor = bg;
+		    		bd.style.backgroundColor = "rgba("+r+str+g+str+b+str+a+")";
+		    	},t);
+		    }
+
+		    slted.onclick=function(){
+		    	clearInterval(timer);
+		    }
+		}
+	</script>
+</head>
+<body>
+	<button id="btn" style="width:100px;height:30px;line-height:26px;outline:none;border:none;cursor:pointer">
+	点击
+	</button>
+	<span id="span">Hello,JS!</span>
+	<input id="tabBg" type="button" value="换色" />
+	<input id="selected" type="button" value="选定" />
+</body>
+</html>

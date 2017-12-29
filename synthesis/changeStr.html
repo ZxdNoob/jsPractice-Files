@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>字符串灵活转换</title>
+    <link rel="shortcut icon" href="../../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+    <style>
+        html{font:"Microsoft Yahei" 20px; color:#999;}
+        body,div,input,p,span{margin:0;padding:0;}
+        #container{width:80%;min-width:500px;max-width:900px;margin:20px auto;background-color: rgba(20, 160, 200,.3);text-align:center;padding-bottom:20px;}
+        input{outline:none;margin-right:10px;margin-top:10px;}
+        input[type="text"]{width:200px;height:32px;line-height:32px;border:1px solid #f08c78;box-shadow:0 0 10px 0 #f8c;padding-left:8px;color:#aaa;}
+        input[type="button"]{width:100px;border:none;height:36px;line-height:20px;background-color:rgb(147, 214, 195);cursor:pointer;}
+        input:last-child{margin-left:0;}
+        #container p{text-align:left;margin:10px 0 10px 20px;line-height:2.6;}
+        p span{color:#fa0;}
+    </style>
+</head>
+<body>
+    <div id="container">
+        <input type="text" value="请输入您要转换的单词字符串" />
+        <input type="button" value="驼峰式" />
+        <input type="button" value="首字母大写" />
+        <p>字符转换后：<span></span></p>
+    </div>
+</body>
+<script>
+    var con = document.getElementById("container");
+    var inStr = con.getElementsByTagName("input")[0];
+    var humpBtn = con.getElementsByTagName("input")[1];
+    var ftUpBtn = con.getElementsByTagName("input")[2];
+    var showStr = con.getElementsByTagName("span")[0];
+    //处理输入框获取焦点时默认值显示与隐藏
+    inStr.addEventListener("focus",function(){
+        if(this.value == "请输入您要转换的单词字符串"){
+            this.value = "";
+        }
+    });
+    //处理输入框失去焦点时默认值显示与隐藏
+    inStr.addEventListener("blur",function(){
+        if(this.value == ""){
+            this.value = "请输入您要转换的单词字符串";
+        }
+    });
+    //驼峰命名法按钮
+    humpBtn.onclick = function(){
+        var inSt = inStr.value;
+        toHump(inSt,1);
+    };
+    //所有单词首字母大写按钮
+    ftUpBtn.onclick = function(){
+        var inSt = inStr.value;
+        toHump(inSt,0);
+    };
+    function toHump(str,num){
+//形参一：传入的字符串，形参二：传入的数字，如果是1则代表选择驼峰命名，如果是0则代表是所有单词首字母大写
+        var arr = str.split(" ");           //以空格为分割标准将字符串转化为数组
+        var len = arr.length;
+        for(var i=num;i<len;i++){      //注意下标i如果从1开始，就忽略了数组第一个元素
+            arr[i] = arr[i].charAt(0).toUpperCase()+arr[i].substr(1);    //还可以用slice(1)和substring(1)
+            //将所有元素的首个字符转换成大写，
+            //因为charAt()返回的是对应下标的字符，所以后面需要将其他字符连接起来
+        }
+        str = arr.join("");                 //将数组转换成紧密连接的字符串
+        showStr.innerHTML = str;
+    }
+</script>
+</html>

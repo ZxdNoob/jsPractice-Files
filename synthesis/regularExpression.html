@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>正则表达式</title>
+    <link rel="shortcut icon" href="../../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+    <style>
+        html{font:"Microsoft Yahei" 20px;color:#555;}
+        body,div,input,button{margin:0;padding:0;}
+        input,button{outline:none;vertical-align:text;}
+        input{padding-left:6px;width:60px;border:1px solid #ee33ff;height:30px;line-height:30px;position:absolute;right:60px;}
+        .content{width:60%;min-width:500px;max-width:800px;border-radius:6px;margin:20px auto;text-align:center;background-color:rgba(20,30,100,.3);padding:60px;box-shadow:0 0 10px 0 #663e0f;}
+        .btnW{position:relative;width:120px;margin:0 auto;}
+        button{width:60px;height:32px;line-height:28px;border:none;background-color:rgb(253, 142, 47);cursor:pointer;text-align:center;position: absolute;right:0;}
+        button:hover{
+            box-shadow: 0 0 6px 0 #888;
+            background-color: #00dd66;
+            color: #fefefe;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="btnW">
+            <input type="text" value="请输入" />
+            <button>搜索</button>
+        </div>
+    </div>
+</body>
+<script>
+    /*var regexp = /abg/;          //字面量方式创建正则对象    "/"开头，“/”结尾
+    var testStr1 = "abcd";
+    var testStr2 = "abcgd";
+    var testStr3 = "abcgd";
+    var testStr4 = "abdeofg";
+    var testStr5 = "123abg";
+//两大验证正则的方法  test()-----正则对象方法，返回布尔值        match()------String对象方法，返回匹配结果数组
+    console.log(regexp.test(testStr1));                 //false，不匹配
+    console.log(regexp.test(testStr2));                 //false，不匹配
+    console.log(regexp.test(testStr3));                 //false，不匹配
+    console.log(regexp.test(testStr4));                 //false，不匹配
+    console.log(regexp.test(testStr5));                 //true，匹配
+    console.log("--------------------");
+    console.log(testStr1.match(regexp));                 //返回null，不匹配
+    console.log(testStr2.match(regexp));                 //返回null，不匹配
+    console.log(testStr3.match(regexp));                 //返回null，不匹配
+    console.log(testStr4.match(regexp));                 //返回null，不匹配
+    console.log(testStr5.match(regexp));                 //返回匹配结果数组，匹配*/
+    function getEle(ele){
+        return document.getElementsByTagName(ele)[0];
+    }
+    var btn = getEle("button");
+    var ipt = getEle("input");
+    // var regExp = /^1[3|4|5|7|8|9][0-9]{9}$/;                     //手机号码正则表达式
+    //必须含有16个字符，首位必须为字母，其余的可以是数字、
+    //字母、下划线、半角左右括号、半角感叹号、百分号，英文引号、美元符和星号
+    // var regExp = /^[A-Z|a-z][\w()!$%*'"]{15}$/;
+    var regExp = /^[\w][\w\W]{1,}$/;              //至少两位字符，首位字符必须是字母、下划线或者数字
+    ipt.onfocus = function(){
+        this.style.width = "160px";
+        if(this.value === "请输入"){
+            this.value = "";
+        }
+    }
+    ipt.onblur = function(){{}
+        this.style.width = "60px";
+        if(this.value === ""){
+            this.value = "请输入";
+        }
+    }
+    btn.onclick = function(){
+        var iV = ipt.value;
+        var _test = regExp.test(iV);        //正则验证
+        if(_test === false){
+            console.log("您的输入有误！");
+        }else{
+            console.log("验证通过！！！");
+        }
+    }
+</script>
+</html>

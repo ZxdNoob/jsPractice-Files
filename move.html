@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8" />
+	<title>封装移动的动画</title>
+	<link rel="shortcut icon" href="../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+	<style>
+		input,div{
+			margin: 0;
+			padding: 0;
+			font-size: 20px;
+			font-family: "Microsoft Yahei";
+			color: #666;
+		}
+		.btn{
+			margin: 20px auto;
+			text-align: center;
+		}
+		.btn,.boxWrap{
+			width: 500px;
+		}
+		.boxWrap{
+			position: relative;
+		}
+		#moveBox{
+			width: 60px;
+			height: 60px;
+			position: absolute;
+			top: 10px;
+			left: 20px;
+			background-color: rgba(243,191,30,.6);
+		}
+		input{
+			width: 50px;
+			height: 32px;
+			margin-right: 30px;
+			line-height: 28px;
+			outline: none;
+			background-color: hsl(200,100%,60%);
+			border: none;
+			cursor: pointer;
+		}
+	</style>
+	<script src="js/move.js"></script>					<!-- 引入封装好的移动效果js -->
+	<script>
+		onload = function(){
+			//封装根据id获取元素的函数
+			function getId(id){
+				return document.getElementById(id);
+			}
+			var box = getId("moveBox");
+			var cont = getId("container");
+			var back = getId("move1");					//往后按钮
+			var forward = getId("move2");				//往前按钮
+			var up = getId("move3");					//向上按钮
+			var down = getId("move4");					//向下按钮
+			var drop = getId("move5");					//向下掉按钮
+			forward.onclick = function(){
+				move(box,"left",20,300);
+			}
+			back.onclick = function(){
+				move(box,"left",20,10);
+			}
+			up.onclick = function(){
+				move(box,"top",20,-300);
+			}
+			down.onclick = function(){
+				move(box,"top",20,300);
+			}
+			var createDiv = "";
+			var len = 16;
+			for(var i=0;i<len;i++){
+				createDiv+="<div style='width:60px;height:60px;margin-right:30px;position:absolute;top:160px;left:"+(i+1)*66+"px;background-color:#fe2233'></div>";
+			}
+			cont.innerHTML = createDiv;
+			var aBlock = cont.getElementsByTagName("div");
+			var setT;
+			var num = 0;
+			drop.onclick = function(){
+				clearInterval(setT);
+				setT = setInterval(function(){
+					move(aBlock[num],"top",30,300);
+					num++;
+					if(num == len){
+						num = 0;
+					}
+				},100);
+			}
+		}
+	</script>
+<body>
+	<div class="btn">
+		<input type="button" value="往后" id="move1" />
+		<input type="button" value="往前" id="move2" />
+		<input type="button" value="向上" id="move3" />
+		<input type="button" value="向下" id="move4" />
+		<input type="button" value="掉落" id="move5" />
+	</div>
+	<div class="boxWrap">
+		<div id="moveBox"></div>
+	</div>
+	<div id="container"></div>
+</body>
+</html>

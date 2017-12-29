@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>function</title>
+	<link rel="shortcut icon" href="../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+	<style>
+		html{font-size:20px;color:#666;font-family:"Microsoft Yahei";}
+		body,ul,li,input{margin:0;padding:0;}
+		ul{width:60%;margin:20px auto;}
+		li{list-style:none;background-color:rgba(6,200,190,0.6);margin-bottom:30px;padding:10px;}
+		input{outline:none;height:32px;line-height:28px;}
+		input[type="text"]{color:rgb(20,100,30);text-align:center;width:60px;}
+		input[type="button"]{cursor:pointer;width:40px;border-color:red;}
+	</style>
+	<script>
+		window.onload = function(){
+			//function小括号里可以放参数，大括号里的是执行的语句块；函数自己不会自己产生作用，需要进行调用
+			//匿名函数调用
+			//不带参数的匿名函数的调用
+			(function (){
+				console.log("Hello,World!");
+			}());
+			//带有参数的匿名函数的调用
+			(function (x,y){
+				var c = x+y;
+				console.log("Hello,World!"+c);
+			}(23,56));
+			//利用函数加函数中的参数可以将代码进行重用和优化，提高性能和代码简洁度
+			var oUl = document.getElementById("list");
+			var aLi = oUl.getElementsByTagName("li");
+			var addBtn = oUl.getElementsByTagName("input")[2];
+			var addBtn2 = oUl.getElementsByTagName("input")[5];
+			var subBtn = oUl.getElementsByTagName("input")[0];
+			var subBtn2 = oUl.getElementsByTagName("input")[3];
+			var val1 = oUl.getElementsByTagName("input")[1];
+			var val2 = oUl.getElementsByTagName("input")[4];
+			var aSpan = oUl.getElementsByTagName("span");
+			add(addBtn,"onclick",val1,aSpan[0]);
+			add(addBtn2,"onclick",val2,aSpan[1]);
+			sub(subBtn,"onclick",val1,aSpan[0]);
+			sub(subBtn2,"onclick",val2,aSpan[1]);
+			//封装加法函数
+			function add(btn,evt,chagVal,tot){
+				var val = chagVal;				//用一个变量来承接这第三个操作对象参数，使得子函数语句块能够访问到它
+				var total = tot;
+				btn[evt] = function (){	//注意不能写成btn.evt，如果是btn.evt，add(addBtn,"onclick")就变成了btn."onclick"
+				    var newVal = val.value;
+					newVal ++;
+					val.value = newVal;
+					total.innerHTML = newVal;
+				}
+			}
+			//封装减法函数
+			function sub(btn,evt,chagVal,tot){
+				var val = chagVal;				//用一个变量来承接这第三个操作对象参数，使得子函数语句块能够访问到它
+				var total = tot;
+				btn[evt] = function (){	//注意不能写成btn.evt，如果是btn.evt，add(addBtn,"onclick")就变成了btn."onclick"
+				    var newVal = val.value;
+					if(newVal >=1){
+						newVal --;
+					}
+					val.value = newVal;
+					total.innerHTML = newVal;
+				}
+			}
+			changeSyn(val1,aSpan[0]);
+			//实时同步输入框里的值
+			function changeSyn(ipt,chagV){
+				var newV = chagV;
+				ipt.oninput = function(){
+					var toNum = Number(ipt.value);
+					if(toNum !== toNum){ 	//判断条件：toNum值不是NaN,判断结果为true时执行if后的语句块,否则执行else后的语句块
+					    alert("请输入正确的整数！");
+					}
+					else{
+						newV.innerHTML = toNum;
+					}
+				}
+			}
+			//JS解析代码的过程：先预解析再逐行解读代码
+			//预解析：先找到关键字var、function等等；所有的变量在解读代码前都是undefined，所有函数在调用前都只是一个代码块，
+			//遇到重复的，只留一个，function名和变量名重复的话，由function会覆盖变量，同名函数之间，后者覆盖前者，直到找完
+			//解读代码：逐行进行解读，依据预解析中得到的值进行操作，此时同名表达式会覆盖同名函数
+
+			/*console.log(xy);			// undefined
+			var xy = 1;*/
+
+			/*console.log(xy);			// function xy(){console.log(66);}
+			var xy = 1;
+			function xy(){
+				console.log(66);
+			}*/
+
+			/*console.log(xy);			// undefined
+			var xy = 1;
+			var xy = function(){		//字面量形式的函数或者写在后头的声明变量在预解析时不会覆盖前面的同名变量
+				console.log(66);
+			}*/
+
+			/*console.log(xy);			// undefined
+			var xy = 0;
+			console.log(xy)				// 0
+			xy = 3;
+			console.log(xy)				// 3*/
+
+			/*console.log(xy);			// function xy(){console.log(666);}
+			var xy = 0;
+			console.log(xy)				// 0
+			xy = 3;
+			console.log(xy);			// 3
+			function xy(){
+				console.log(666);
+			}
+			console.log(xy());			// 这里会报错——"xy is not a function"，因为xy最终是赋值给了3，JS找不到"3()"*/
+
+			/*var x = 3;
+			function fn1(){
+				console.log(x);			// undefined，优先看函数内部有没有定义x，看到var了，首先给它undefined初始值
+				var x = 6;
+			}
+			fn1();
+			console.log(x);				// 3，这里的x属于全局定义的x，而fn1函数没有改变它的值，所以是3*/
+
+			/*var x = 3;
+			function fn1(){
+				console.log(x);			// 3，里面没找到var，就从外面找，找到后此时x的值就是全局定义的x值，所以是3
+				x = 1;					// 解读到这行时，因为在函数内找不到定义的x,又向外找，将全局变量变为1
+			}
+			fn1();
+			console.log(x);				// 1，全局变量x被fn1函数调用后修改为1*/
+
+			/*function fn1(){
+				console.log(x);			//报错，因为无论是内部还是外部都没有定义这个x
+				x = 1;					//因为前一步已经报错，这里就没有再进行解读
+			}
+			fn1();
+			console.log(x);			    //因为前一步已经报错，这里就没有再进行解读*/
+
+			/*function fn1(){
+				x = 1;					// 此时相当于定义了一个全局变量x，赋值给了1
+				console.log(x);			// 1，读到了全局变量x=1
+			}
+			fn1();
+			console.log(x);				//1，全局变量x=1*/
+
+			/*var x = 3;
+			function fn1(x){
+				console.log(x);			// undefined，找到了一个参数，这个参数没被传进来，所以是undefined
+				x = 1;					// 这里将函数里前面的参数x修改为1，所以参数相当于一个局部变量，不会改变全局变量
+				console.log(x);
+			}
+			fn1();
+			console.log(x);				// 3，全局变量x=3,没有被修改*/
+
+			/*var x = 3;
+			function fn1(x){
+				console.log(x);			// 5，找到了一个参数，这个参数传的是5，所以是5
+				x = 1;					// 这里将函数里前面的参数x=5重新赋值给1，所以参数相当于一个局部变量，不会改变全局变量
+				console.log(x);			// 1，最新参数值1
+			}
+			fn1(5);
+			console.log(x);				// 3，全局变量x=3,没有被修改*/
+			//访问函数里的变量
+			/*function fn(){
+				var i = 6;
+				console.log(i);
+			}
+			fn();
+			console.log(i);            //报错，直接访问不到函数里面的局部变量i*/
+
+			/*var m;					   //先声明一个未定义变量
+			function fn(){
+				var i = 6;
+				m = i;				   //用全局变量m来承接这个函数内局部变量i
+				console.log(m);
+			}
+			fn();
+			console.log(m);			  //m的值就变成了函数内i的值，但是你仍然不能在外部直接访问到i*/
+
+			/*function fn(){
+				i = 6;				 //这里的i相当于是全局变量
+				console.log(i);
+			}
+			fn();
+			console.log(i);			  //由于i是全局变量，所以可以直接访问得到，但是不推荐用这种方法*/
+
+			/*//函数传参方式获取
+			function fn(){
+				var i = 6;
+				console.log(i);
+				get(i);				 //将局部变量i作为get函数的参数传进去
+			}
+			fn();
+			function get(x){		 //这里的参数x就相当于fn函数的局部变量i
+				console.log(x);		 //理所当然可以得到i了
+			}*/
+		}
+	</script>
+</head>
+<body>
+	<ul id="list">
+		<li>
+			<input type="button" value="-" />
+			<input type="text" value="0" />
+			<input type="button" value="+" />
+			<p>总计：<span>0</span></p>
+		</li>
+		<li>
+			<input type="button" value="-" />
+			<input type="text" value="0" />
+			<input type="button" value="+" />
+			<p>总计：<span>0</span></p>
+		</li>
+	</ul>
+</body>
+</html>

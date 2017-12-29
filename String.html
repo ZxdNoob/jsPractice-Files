@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>字符串</title>
+	<link rel="shortcut icon" href="../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+	<style>
+		html{font-size:20px;color:#333;}
+		body,div,form,input,span{margin:0;padding:0;}
+		#box{width:60%;margin:20px auto;background-color:rgba(60,20,3,0.2);padding:60px;}
+		input{outline:none;padding-left:6px;width:160px;line-height:36px;border-color:rgba(60,20,3,0.2);}
+		input[type="submit"]{
+			width: 70px;
+			height: 32px;
+			line-height: 28px;
+			background-color: hsl(100,100%,60%);
+			cursor: pointer;
+			border: none;
+			text-align: center;
+			border-radius: 6px;
+			color: brown;
+			margin-left: 20px;
+			box-shadow: 0 0 20px 0 #aaa;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+			var str = "";
+			//console.log(str.length);			//获取字符串长度
+			var str2 = "China";
+			//console.log(str2.charAt(3));		//获取对应下标的字符串，默认是第1个，即charAt()=charAt(0)
+			var str3 = "   ";
+			//console.log(str3.length);			//一个空格占据一个长度
+			var str4 = "好好学习";
+			//console.log(str4.charCodeAt());		//获取“好”这个汉字在计算机中的字符编码
+			//console.log(str4.charCodeAt(2));    //获取“学”这个汉字在计算机中的字符编码
+			//console.log(String.fromCharCode(23398));
+			 //利用内置字符串对象fromCharCode(Code1,Code2)方法获取对应的字符,获取多个就用逗号隔开字符编码
+			/*var str5 = "";
+			for(var i = 0;i<=10000;i++){			//遍历字符编码从0到10000的字符串
+				str5 += String.fromCharCode(i)+"  ";
+			}
+			document.body.innerHTML = str5;*/
+			//加密功能
+			var box = document.getElementById("box");
+			var contBox = document.getElementById("content");
+			var aInput = box.getElementsByTagName("input");
+			var passW = aInput[0];
+			var subIpt = aInput[1];
+			var cont = document.getElementById("content");
+			var pwded = cont.getElementsByTagName("span")[0];
+			var timer;
+			subIpt.onclick = function(e){
+				e.preventDefault();					//阻止提交
+				clearTimeout(timer);
+				var pwdCon = passW.value;
+				var newPwd = "";
+				for(var i=0;i<pwdCon.length;i++){
+					newPwd += String.fromCharCode(pwdCon.charCodeAt(i)+10000);
+					//在原来转码结果基础上加10000作为加密信息的字符编码
+				}
+				pwded.innerHTML = newPwd;
+				timer = setTimeout(function(){pwded.innerHTML="请重新选择加密或退出"},3000);
+				//3秒没操作后就换成这个提示信息
+			}
+
+			//JS自身提供的查找字符串中某个字符的方法——indexOf
+			var str5 = "The Great Wall in CHina";
+			//console.log(str5.indexOf("n",18));
+			//console.log(str5.indexOf("n",1));
+			//第一个参数是要找的字符或字符串，第二个参数是第几个索引值开始找，返回匹配到的最近的字符所属索引值或字符串第一个字符的索引值
+			var str6 = "GreatMan";
+			//console.log(str6.indexOf("a"));			//第二个参数可以不传，默认就是从0开始找
+			//console.log(str6.indexOf("ea",6));		//找不到就会返回-1
+			//console.log(str6.indexOf("ea",1));
+			//console.log(str6.lastIndexOf("a"));
+			//lastIndexOf()是和indexOf()相反的查找方法，它是从右往左的，匹配的索引值还是正常数的索引值
+			var str7 = "中华人民共和国和俄罗斯联邦有着很友好的关系！";
+			console.log(str7.substring(6, 10));
+			//substring()方法截取参数中设定的从哪个索引值到哪个索引值的字符串,
+			//它会自动将前面大的参数调到后面，负数作0处理,含头不含尾
+			var idxHead = str7.indexOf("中");
+			var idxHead2 = str7.indexOf("国");
+			var idxFoot = str7.indexOf("俄");
+			var idxFoot2 = str7.indexOf("斯");
+			var strP = ",";
+			console.log(str7.substring(idxHead,idxHead+1)+str7.substring(idxHead2,idxHead2+1)+strP+str7.substring(idxFoot,idxFoot2+1));
+			//console.log(str7.slice(-1));		//slice()方法会将-1当作从末尾的第一个
+			//console.log(str7.slice(-6,-2));		//这个表示从倒数第6个到倒数第二个，也是含头不含尾
+			//console.log(str7.slice(2,0));		//顺序是从大到小的话它不会自动转成从小到大，于是返回空字符串
+			//字符串之间的比较是一个一个字符地进行比较
+			console.log("aaaaaaaa">"b");		//只比较"a"和"b"谁的字符编码大
+			//字母大小写转换
+			console.log(str6.toUpperCase());   //将字符串的字母全部转成大写
+			console.log(str6.toLowerCase());   //将字符串的字母全部转成小写
+
+
+			//split()方法可以将字符串按一定规则转化为数组
+			var str8 = "66666666";
+			console.log(str8.split());		 //不加任何参数会将整个字符串当作数组的一个元素转化成数组
+			console.log(str8.split(""));	 //如果以空字符串为分割规则，会按照一个字符为一个数组元素转化成数组
+			var str9 = "我是谁？我来自哪里？我将去往何方？";
+			console.log(str9.split("？"));
+			//将以“？”为分割线，分割成若干个元素组成的数组,注意它会一直分割到最后一个“？”，如果最后一个“？”后没有字符，则当作空字符串，这个空字符串也会成为数组的一个元素
+			console.log(str9.split("我"));
+			//直接用字符串中某个字符作为分割规则,那么除去那个字符，它后面的字符到下一个这个字符之间将会当作数组的元素
+			console.log(str9.split("我",2));			//第二个参数是规定这个数组的长度
+		}
+	</script>
+</head>
+<body>
+	<div id="box">
+		<form>
+			<input type="text" placeholder="请输入加密信息" />
+			<input type="submit" value="开始加密" />
+		</form>
+		<div id="content">
+			<span>正在等待加密。。。</span>
+		</div>
+	</div>
+</body>
+</html>

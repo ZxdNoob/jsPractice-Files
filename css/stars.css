@@ -1,0 +1,36 @@
+body,div,span{
+	margin: 0;
+	padding: 0;
+	font-family: "Microsoft Yahei";
+	font-size:20px;
+	color: #666;
+}
+div{
+	width: 300px;
+	margin: 30px auto;
+	padding: 20px;
+	background-color: rgba(65,145,182,.2);
+	border-radius: 6px;
+	box-shadow: 0 0 20px 0 #41416b;
+	text-align: center;
+}
+span{
+	display: inline-block;
+	width: 40px;
+	line-height: 40px;
+	height: 40px;
+	margin-right: 10px;
+	background-color: hsla(60, 100%, 90%, .7);
+	vertical-align: middle;
+	cursor: pointer;
+	-webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+#stars2>span{
+	border-radius:50%;
+}
+span.active{
+	background-color: #0ebd43;
+}

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>面向对象</title>
+	<link rel="shortcut icon" href="../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="css/stars.css" />
+	<script>
+		//传统的创建对象方式
+		// var obj = {"name":"James","age":"34","country":"USA"};//当然也可以使用new Object()方式进行创建
+		// var obj2 = {"name":"O'Neal","age":"47","country":"USA"};
+		//传统创建对象方式的缺点是，如果有多个具有相同特征的对象,我们需要不停的声明和创建
+		//这时候想到了将变量作为函数的形参，想用的时候可以进行调用，将实参传进去，批量生产，提高复用度
+		//但是这种方式不能反映出调用这个函数的变量们之间的关系
+		/*function person(name,age,country){
+			return {"name":name,"age":age,"country":country};
+		}
+		var p1 = person("James",34,"USA");
+		var p2 = person("O'Neal",47,"USA");
+		console.log(p1);
+		console.log(p2);
+		console.log(p1.__proto__);
+		console.log(p2.__proto__);*/
+		/*//构造函数
+		function Person(name,age,country){
+			this.name = name;
+			this.age = age;
+			this.country = country;
+			this.sayHello = function(msg){
+				console.log(msg);
+			}
+		}
+		var p3 = new Person("Jordan",50,"USA");
+		console.log(p3);
+		p3.sayHello("你好！");
+		var p4 = new Person("Jay Chou",38,"CHN");
+		console.log(p4);
+		p4.sayHello("Hello!");
+		console.log(p3.__proto__);
+		console.log(p4.__proto__);	//p3和p4他们都是从构造函数Person中生成的，所以Person是它们的原型对象
+		console.log(p3.sayHello === p4.sayHello);  //返回false，说明它们不在同一地址上存储,不利于性能优化*/
+		//于是在构造函数的基础上加上prototype属性来规定两个实例公共的属性，即让实例对象继承原型对象的属性
+		/*function Person(name,age,country){
+			this.name = name;
+			this.age = age;
+			this.country = country;
+		}
+		Person.prototype.sayHello = function(msg){
+				console.log(msg);
+		};
+		var p5 = new Person("Jack",20,"Canada");
+		p5.sayHello("你好！");
+		var p6 = new Person("Catch",16,"Fnank");
+		p6.sayHello("Hello!");
+		console.log(p5.sayHello === p6.sayHello);		//此时返回true，存储地址是一致的
+		//判断原型对象和实例之间的关系用prototype属性中的isPrototypeOf()方法
+		var p7 = new Object("张三",36,"赵国");
+		// console.log(Person.prototype.isPrototypeOf(p5));
+		// console.log(Person.prototype.isPrototypeOf(p6));
+		// console.log(Person.prototype.isPrototypeOf(p7));
+		//用实例对象的hasOwnProperty()方法来判断它的一个属性是本地属性(true)还是继承了远行对象的属性(false)
+		console.log(p5.hasOwnProperty("name"));
+		console.log(p6.hasOwnProperty("name"));
+		console.log(p5.hasOwnProperty("age"));
+		console.log(p6.hasOwnProperty("age"));
+		console.log(p5.hasOwnProperty("sayHello"));
+		console.log(p6.hasOwnProperty("sayHello"));*/
+		onload = function(){
+			var oStar1 = getId("stars1");
+			var oStar2 = getId("stars2");
+			var span = "span";
+			var aStars1 = getTag(oStar1,span);
+			var aStars2 = getTag(oStar2,span);
+			function getId(id){
+				return document.getElementById(id);
+			}
+			function getTag(pId,tag){
+				return pId.getElementsByTagName(tag);
+			}
+			function addItems(length,tag){
+				//封装移除类名函数
+				function delClass(items,obj){
+					for(var i = items;i<obj.length;i++){
+						obj[i].className = "";
+						obj[i].innerHTML = "";
+					}
+				}
+				//封装添加类名函数
+				function addClass(items,obj){
+					for(var i = 0;i<items;i++){
+						obj[i].className = "active";
+						obj[i].innerHTML = i+1;
+					}
+				}
+				addClass(length,tag);
+				delClass(length,tag);
+			}
+			//遍历span标签
+			for(var i=0;i<aStars1.length;i++){
+				aStars1[i].index = i+1;
+				aStars1[i].onmouseover = function(){
+					var onStar = this.index;
+					addItems(onStar,aStars1);
+				}
+
+				aStars2[i].index = i+1;
+				aStars2[i].onmouseover = function(){
+					var theStar = this.index;
+					addItems(theStar,aStars2);
+				}
+			}
+
+			function parent(){
+				var A = "abcdefg";
+				function child(a){
+					return a;
+				}
+				return child;
+			}
+			var b = parent();
+			console.log(b());
+		}
+	</script>
+</head>
+<body>
+	<div id="stars1">
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+	</div>
+	<div id="stars2">
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+	</div>
+</body>
+</html>

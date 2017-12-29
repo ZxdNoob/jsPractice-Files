@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>Json和Array</title>
+	<link rel="shortcut icon" href="../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+	<script>
+		//Json对象以键值对形式出现
+		var Json = {"name":"关羽","age":36,"sex":"male","time":["三国","战国","汉唐"]};
+		//console.log(Json.name);				//访问属性方式一
+		//console.log(Json["time"]);			//访问属性方式二
+		//Json.name = "貂蝉";
+		//Json.sex = "female";
+		//console.log(Json.name);
+		//遍历Json使用for in
+		/*for(var attr in Json){
+			console.log(attr);		//找到Json中每一个属性
+			console.log(Json[attr]);
+			//找到Json中每一个属性值，注意不能以点的方式获取，只能通过方括号的方式获取
+		}
+		var Json2 = {"蜀国大将":["关羽","张飞","赵云"],"魏国大将":["张辽","许褚","夏侯惇","乐进"],"吴国大将":["黄盖","程普","甘宁"]};
+		for(var attr in Json2){
+			for(var i = 0;i<Json2[attr].length;i++){		//for in中可以再嵌套使用for，反过来也是可以的
+				console.log(Json2[attr][i]);
+			}
+		}
+		//数组也可以用for in的形式进行遍历，但是不推荐
+		var arr = ["夏朝","商朝","西周","春秋","战国"];
+		for(var i in arr){
+			console.log(arr[i]);
+		}*/
+		//数组的定义方式
+		//方式一
+		/*var arr2 = new Array(3);			//Array()方法中只有一个数字的话会被当做数组的长度
+		console.log(arr2.length);
+		console.log(arr2);
+		var arr3 = new Array("3");			//字符串"3"成了这个数组的一个元素
+		console.log(arr3.length);
+		console.log(arr3);*/
+		//方式二
+		/*var arr4 =[1,2,3,"一","二","三","壹","贰","叁","1","2","3"];
+		console.log(arr4);
+		arr4.length = 3;			//将数组长度定义为3，则保留数组前三个元素
+		console.log(arr4);
+		arr4.length = 0;			//将数组长度定义为0，则清空数组内所有元素
+		console.log(arr4);*/
+		//更高效的清空数组的方式
+		var arr5 = ["我是第一个",1,2,3,4,5,6,7,8,9,10,11,12,13,"我是最后一个"];
+		/*arr5 = [];
+		console.log(arr5);*/
+		/*arr5 = new Array();				//或者这样
+		console.log(arr5);*/
+		//数组的四大很实用的方法
+		//push()方法是向数组开头插入元素,返回的是添加元素后的新数组长度
+		/*var arrPush = arr5.push("a");
+		console.log(arrPush);*/
+		//unshift()方法是向数组开头插入元素，返回的也是新数组长度，IE7及以下的IE版本不支持这个返回值
+		/*var arrUnsh = arr5.unshift("b")
+		console.log(arrUnsh);*/
+		//pop()方法是从数组的末尾删除元素，返回的是被删除的元素
+		/*var arrPop = arr5.pop();
+		console.log(arrPop);*/
+		//shift()方法是从数组的开头开始删除元素，返回的是被删除的元素
+		/*var arrSh = arr5.shift();
+		console.log(arrSh);*/
+		/*//综合运用pop()和unshift()方法可以实现将后面的数组元素调到最前面
+		arr5.unshift(arr5.pop());
+		console.log(arr5);*/
+		/*//综合运用push()和shift()方法可以实现将前面的数组元素调到最末尾
+		arr5.push(arr5.shift());
+		arr5.push(arr5.shift());
+		console.log(arr5);*/
+		//数组中“全能选手”——splice()方法,只有删除了元素才有返回值，返回被删除的所有元素
+		var arr6 = ["6","55",6,6,5,1,3,5,2,6,8,100,"100"];
+		/*arr6.splice(0,1);		//实现删除数组的一个元素，从前往后删
+		console.log(arr6);*/
+		/*arr6.splice(3,0,"777");		//实现向数组第四个元素前面插入"777"这个元素
+		console.log(arr6);*/
+		/*arr6.splice(2,3,"991",992,993); //替换数组的第三个到第五个元素为"991"、992和993
+		console.log(arr6);*/
+		//利用splice()方法给数组去重
+		/*for(var i = 0;i<arr6.length;i++){
+			for(var j=i+1;j<arr6.length;j++){
+				if(arr6[i] === arr6[j]){			//当两个元素相同时
+					arr6.splice(j,1);
+					j--;							//这个j--很重要，因为每删除一个元素，数组就少了一个长度
+				}
+			}
+		}
+		console.log(arr6);*/
+		//sort()方法是数组的排序方法,内置一个排序规则函数，如果不添加这种函数默认以比较字符串大小的方式进行排序
+		/*//从小到大排序函数
+		function sort(a,b){
+			return a-b;
+		}
+		arr6.sort(sort);
+		console.log(arr6);*/
+		/*//从大到小排序函数
+		function sortB(a,b){
+			return b-a;
+		}
+		arr6.sort(sortB);
+		console.log(arr6);*/
+		/*//默认排序
+		arr6.sort();
+		console.log(arr6);*/
+		/*//自定义随机排序
+		function sortRan(a,b){
+			return Math.random()-0.5;
+		}
+		arr6.sort(sortRan);
+		console.log(arr6);*/
+
+		//随机数探究
+		//Math.random()方法默认获取的是0~1之间所有的数，包括0和小数，但是不包括1
+		// var random1 = Math.random();
+		// console.log(random1);
+		//配合使用Math.round()方法获取随机整数
+		/*//0~10
+		var random2 = Math.round(Math.random()*10);
+		console.log(random2);*/
+		/*//1~10
+		setInterval(function(){
+			document.body.innerHTML = "";
+			var random3 = Math.round(Math.random()*9+1);
+			document.body.innerHTML = random3;
+		},600);*/
+		/*//封装一个求x~y之间随机整数的函数
+		function numRand(x,y){
+			var random = Math.round(Math.random()*(y-x)+x);
+			console.log(random);
+		}
+		numRand(2,6);*/
+
+	   //Math.ceil()和Math.floor()方法分别是
+	   //向上取整(无论小数大小都进一位)和向下取整(无论小数大小都取整数的大小)
+	   /*//利用Math.ceil()取2~6的整数
+	   var random4 = Math.ceil(Math.random()*5+1);
+	   console.log(random4);*/
+	   /*//封装一个利用Math.ceil()方法取x~y之间的随机整数的函数
+	   function ceilNum(x,y){
+	   		var random = Math.ceil(Math.random()*(y-x+1)+(x-1));
+	   		console.log(random);
+	   }
+	   ceilNum(8,12);*/
+
+	   /*//用Math.floor()方法取2~5之间的整数
+	   var random5 = Math.floor(Math.random()*4+2);
+	   console.log(random5);*/
+	   /*//封装一个利用Math.floor()方法取x~y之间的随机整数的函数
+	   function floorNum(x,y){
+	   		var random = Math.floor(Math.random()*(y-x+1)+x);
+	   		console.log(random);
+	   }
+	   floorNum(5,10);*/
+
+	   /*//获取0.2~0.9之间的保留一位小数的随机小数
+	   //第一步，将其弄成2~9之间的随机整数,无论ceil()、floor()或者是round()都可以做到
+	   var random6 = Math.round(Math.random()*7+2);
+	   console.log(random6);
+	   //第二步，将生成的随机小数乘以0.1再配合使用toFixed(2)方法进行使用，
+	   //因为不使用toFixed(2)的话会产生多位小数的Bug
+	   //因为toFixed()结果是字符串类型，所以需要用parseFloat()将其转化为带有小数的数字类型
+	   var result = parseFloat((random6*0.1).toFixed(1));
+	   console.log(result);*/
+
+	   /*//concat()和reverse()方法
+	   var arrA1 = [8,10,6,3,5,8,9,10];
+	   var arrA2 = [10,6,9,"oo","vv","hh","cc"];
+	   var arrA3 = [8,5,100,46,99];
+	   var concatArr = arrA1.concat(arrA2);			//concat()方法用来合并一个或者多个数组
+	   var concatArr2 = arrA1.concat(arrA2,arrA3);
+	   console.log(concatArr);
+	   console.log(concatArr2);
+	   var reverseArr = arrA2.reverse();			//reverse()方法是用来颠倒数组各元素原本顺序的
+	   console.log(reverseArr);*/
+
+	   //综合运用字符串相关方法和数组倒序方法让字符串每个字符顺序颠倒
+	   var myString = "中国人从不服输！";
+	   var toArr = myString.split("");			//先将字符串转化为数组
+	   var newArr = toArr.reverse();			//将得到的数组进行倒序
+	   var newStr = newArr.join("");			//将倒序后的数组转化为字符串
+	   console.log(newStr);
+	</script>
+</head>
+<body>
+
+</body>
+</html>

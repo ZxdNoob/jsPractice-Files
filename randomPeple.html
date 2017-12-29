@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>随机点名</title>
+    <link rel="shortcut icon" href="../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+    <style>
+        html{font:"Microsoft Yahei" 20px;color:#666;}
+        body,div,table,button,tr,td{margin:0;padding:0;}
+        #content{width:80%;text-align:center;padding:20px;min-width:800px;max-width:1000px;margin:20px auto;background-color:rgba(164, 211, 238, .6);display:none;}
+        body{background-color:rgb(20,20,20);}
+        button{
+            width: 100px;
+            cursor: pointer;
+            outline: none            border-radius: 6px;
+            box-shadow: 0 0 6px 0 #fefefe;;
+
+            height: 36px;
+            line-height: 32px;
+            background-color: hsl(200,100%,90%);
+            border: none;
+            color: #b3bc20;
+        }
+        button:last-child{
+            margin-left: 10px;
+        }
+        button:hover{
+            color: #f08c78;
+        }
+        #btnGroup{
+            width: 100%;
+            position: absolute;
+            bottom: 16%;
+            text-align: center;
+        }
+        table{
+            width: 80%;
+            min-width:480px;
+            margin: 10px auto;
+            border: 2px solid #bc1339;
+            border-collapse: collapse;                  /*将单元格边框和表格外边框合并*/
+        }
+        table td{
+            border: 2px solid #bc1339;
+            padding: 3px;
+            transition: all 1s ease;
+        }
+        table td.active{
+            font-size: 22px;
+            background-color: rgb(252, 225, 126);
+            border-color: rgb(250, 250, 2500);
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <table>
+        </table>
+    </div>
+    <div id="btnGroup">
+        <button id="nameList">获取名单</button>
+        <button id="btn">开始点名</button>
+    </div>
+    <script>
+        function getId(id){
+            return document.getElementById(id);
+        }
+        var content = getId("content");
+        var getBtn = getId("nameList");
+        var onOff = getId("btn");
+        var table = getId("content").getElementsByTagName("table")[0];
+        var running = null;
+        var isRun = true;
+        var ranA = [];             //创建空数组用来存随机数
+        var oldN,newN;             //这两个变量分别表示上一个随机数和当前随机数
+        //获取名单
+        getBtn.onclick = function(){
+            var xhr;
+            if(window.XMLHttpRequest){
+            //兼容判断，如果为真就代表是IE7+、Chrom、FireFox、Safri、Oprea浏览器
+                xhr = new XMLHttpRequest();
+            }else{                                 //IE6和IE5
+                xhr = new ActiveXObject("Microsoft XMLHTTP");
+            }
+            xhr.open("GET","json/myPeple.json");
+            //open()方法里面传三个参数——methods、URL和async（默认是true，即不传入这个参数就代表异步请求）
+            xhr.onreadystatechange = function(){                    //绑定页面状态改变事件
+                if(xhr.readyState == 4 && xhr.status==200){
+           //请求状态码为4代表请求已完成，服务器反馈码为200代表服务器处理已经成功
+                    var data = JSON.parse(xhr.responseText).name;
+                    //将JSON数据转为普通的JS对象并获取名单数组
+                    var str="";
+                    var arr = [];
+                    for(var i = 0;i<data.length;i+=10){          //每10个一循环
+                        sliceArr(arr,data,i,i+10);              //调用拆分数组的方法
+                    }
+                    //遍历新数组拿到每组数据
+                    for(var i =0;i<arr.length;i++){
+                        str+="<tr>";                            //此时arr[i]代表每一行即每一个tr
+                        for(var j = 0;j<arr[i].length;j++){
+                            str += "<td>"+arr[i][j]+"</td>";         //拼接每一个td的内容
+                        }
+                        str+="</tr>";                               //闭合每一个tr标签
+                    }
+                    table.innerHTML = str;
+                    setTimeout(function(){content.style.display = "block"},100);
+                    //让content容器在100毫秒内显示出来
+                }
+            }
+            xhr.send();
+        }
+
+        //点名功能
+        onOff.onclick = function(){
+            if(table.rows[0] !== undefined){        //当table内容不为空时执行
+                if(isRun){
+                    isRun = false;
+                    this.innerHTML = "停止";
+                    clearInterval(running);
+                    running = setInterval(randPerson,300);
+                }else{
+                    this.innerHTML = "继续点名";
+                    clearInterval(running);
+                    isRun = true;
+                }
+            }
+        }
+
+        //随机产生名单里的人名
+        function randPerson(){
+            var tds = table.getElementsByTagName("td");         //获取所有的单元格
+            var randN = Math.round(Math.random()*(tds.length-1));
+            ranA.push(randN);
+            if(oldN === undefined && ranA.length === 1){     //刚开始是产生一个随机数时
+                oldToNew();
+            }else{                                          //产生两个随机数后
+                tds[oldN].className = "";
+                ranA.shift();                   //始终删除第一个元素，让数组里面始终存放最新的随机数
+                oldToNew();
+            }
+        //封装上一个随机数和当前随机数互相转换的函数
+            function oldToNew(){
+                newN = ranA[0];
+                tds[newN].className = "active";
+                oldN = newN;
+            }
+        }
+
+        //封装将一个数组分成由它里面一定个数的元素组成的多个数组
+        function sliceArr(arr,oldArr,item,items){
+        //第一个参数为新数组，第二个参数是原数组，第三个参数为起始下标，第四个参数规定元素的个数
+            arr.push(oldArr.slice(item,items));             //push()方法配合slice()方法
+        }
+    </script>
+</body>
+</html>

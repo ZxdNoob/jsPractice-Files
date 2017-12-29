@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh">			<!-- 告知浏览器这是一个中文文档页面 -->
+<head>
+	<meta charset="UTF-8">
+	<title>关于for循环</title>
+	<link rel="shortcut icon" href="../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="css/myCss.css" />
+	<script>
+	window.onload = function(){					//等待文档加载完成
+	    /*//for循环常规写法
+		for(var i = 0;i<11;i++){
+			console.log(i);
+		}*/
+		/*//for循环分拆写法
+		var i = 0;								//外面声明初始化变量
+		for(;i<11;){							//for循环条件中只留变量最大值判定，注意分号不能省略
+			i++;								//自增
+			console.log(i);
+		}
+		//循环语句执行顺序：1. var i = 0; 2.判断i是否符合i<11 3.符合的话就执行console.log(i) 4.i++ 5.再判断i是否符合i<11 6.符合的话再执行console.log(i) …… 直到i=11时跳出了循坏
+		console.log(i)							//此时i是符合跳出条件的11*/
+		var aUl = document.getElementsByTagName("ul")[0]; //获取的是一个元素集合，所以需要加上方括号，选择索引值
+		var aLi = aUl.getElementsByTagName("li");
+		var fruitArr = ["苹果","香蕉","葡萄","梨","李子"]; 	   //定义水果列表数组
+		for(var i=1;i<aLi.length;i++){
+			aLi[i].onOff = true;						//给元素li自定义一个onOff属性，用来记录和切换点击状态
+			aLi[i].innerText = fruitArr[i-1];		    //注意这里不能用innerHTML
+			aLi[i].onclick = function(){
+				if(this.onOff){
+					this.className = "hasText";		    //给当前被点击的元素添加类名hasText
+					this.onOff = false;
+				}else{
+					this.className = "";
+					this.onOff = true;
+				}
+			}
+		}
+		//预先声明变量来代表长长的语句可以大大提高性能
+		/*//性能很差的写法
+		for(var j=0;j<=6000;j++){
+			document.body.innerHTML += "<p>111</p>";
+		}*/
+		/*//性能很好的写法
+		var str = "";
+		for(var j = 0;j<=6000;j++){
+			str += "<p>111</p>";
+		}
+		document.body.innerHTML = str;*/
+		/*var str = "";
+		for(var j = 0;j<=6000;j++){
+			str+="1";
+		}
+		var box = document.getElementsByClassName("content")[0];
+		var newP = document.createElement("p");
+		newP.innerText = str;
+		box.appendChild(newP);*/
+		//随机数
+		var gameBox = document.getElementsByClassName("game")[0];
+		var btn = document.getElementsByTagName("input");
+		var handImg = gameBox.getElementsByTagName("img")[0];
+		var handImg2 = gameBox.getElementsByTagName("img")[1];
+		var note = gameBox.getElementsByClassName("note")[0];
+		var winI = note.getElementsByTagName("i")[0];
+		var winY = note.getElementsByTagName("i")[2];
+		var dogF = note.getElementsByTagName("i")[1];
+		var b1 = gameBox.getElementsByTagName("b")[0];
+		var b2 = gameBox.getElementsByTagName("b")[1];
+		var result = document.getElementById("msg"); //ID的获取必须从文档开始，错误写法：gameBox.getElementById("msg")
+		var times1 = 0;										//用于记录“我出拳”被点击次数
+		var times2 = 0;             						//用于记录“你出拳”被点击次数
+		var iWin = 0;										//用于记录“我赢了”出现次数
+		var youWin = 0;										//用于记录“你赢了”出现次数
+		var dogfall = 0;									//用于记录“平局”出现次数
+		var myMath = ["img/scissor_hand.png","img/stone_hand.png","img/cloth_hand.png"];	//预存图片路径地址
+		btn[0].onclick = function(){
+			times1++;
+			this.style.color="blue";
+			b1.innerHTML = "我出拳了<i>"+times1+"</i>次！";
+			var res1 = Math.round(Math.random()*2);			//设置产生0到3的随机整数
+			handImg.src = myMath[res1];
+			getHand();
+		}
+		btn[1].onclick = function(){
+			times2++;
+			b2.innerHTML = "你出拳了<i>"+times2+"</i>次！";
+			this.style.color="blue";
+			var res2=Math.round(Math.random()*2);			//设置产生0到3的随机整数
+			handImg2.src = myMath[res2];
+			getHand();
+		}
+		//判断出拳后胜负的函数
+		function getHand(){
+			//至少要点击一次且点击次数要一样多
+			if(times1 >= 1 && times2 >= 1 && times1 == times2){
+				var newSrc1 = handImg.src.split("/");			//转化为数组
+					newSrc1 = newSrc1.slice(4,9);				//截取路径中我们需要的部分
+					newSrc1 = newSrc1.join("/");				//将数组的每个元素以斜杠方式划分出来再转化为字符串
+				var newSrc2 = handImg2.src.split("/");			//转化为数组
+					newSrc2 = newSrc2.slice(4,9);				//截取路径中我们需要的部分
+					newSrc2 = newSrc2.join("/");				//将数组的每个元素以斜杠方式划分出来再转化为字符串
+				if(newSrc1 == newSrc2){							//图片一样的时候打成平手
+					dogfall++;
+					result.innerHTML = "打平，继续！";
+				}else{
+					if(newSrc1 == myMath[0] && newSrc2 == myMath[2]){ //我出拳为剪刀，你出拳为布时
+					    iWin++;
+						result.innerHTML = "哈哈，我赢了！";
+					}else if(newSrc1 == myMath[0] && newSrc2 == myMath[1]){ //我出拳为剪刀，你出拳为石头时
+					    youWin++;
+						result.innerHTML = "恭喜啊，你赢了！";
+					}else if(newSrc1 == myMath[1] && newSrc2 == myMath[0]){ //我出拳为石头，你出拳为剪刀时
+						iWin++;
+						result.innerHTML = "哈哈，我赢了！";
+					}else if(newSrc1 == myMath[1] && newSrc2 == myMath[2]){ //我出拳为石头，你出拳为布时
+						youWin++;
+						result.innerHTML = "恭喜啊，你赢了！";
+					}else if(newSrc1 == myMath[2] && newSrc2 == myMath[0]){ //我出拳为布，你出拳为剪刀时
+						youWin++;
+						result.innerHTML = "恭喜啊，你赢了！";
+					}else{
+						iWin++;
+						result.innerHTML = "哈哈，我赢了！";
+					}
+				}
+				winY.innerHTML = youWin;
+				dogF.innerHTML = dogfall;
+				winI.innerHTML = iWin;
+			}
+		}
+	}
+	</script>
+</head>
+<body>
+	<div class="content">
+		<ul>
+			<li>常见的水果</li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<div class="game">
+			<div class="note">
+				<p>我赢了：<i>0</i>次</p>
+				<p>平局：<i>0</i>次</p>
+				<p>你赢了：<i>0</i>次</p>
+			</div>
+			<div class="play">
+				<p>
+					<input type="button" value="我出拳" />
+					<img src="img/cloth_hand.png" alt="图片" />
+					<b></b>
+				</p>
+				<p>
+					<input type="button" value="你出拳" />
+					<img src="img/cloth_hand.png" alt="图片" />
+					<b></b>
+				</p>
+				<span id="msg">打平，继续！</span>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

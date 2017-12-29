@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>JS学习之面向对象</title>
+	<link rel="shortcut icon" href="../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+</head>
+<style>
+	table{
+		width:60%;
+		margin: 20px auto;
+		border:4px solid rgb(230,20,60);
+		text-align:center;
+	}
+	caption{
+		font-size:20px;
+		font-weight:600;
+		color:hsl(200,0%,30%);
+	}
+	td{
+		color:rgba(6,100,200,0.8);
+	}
+	.made{
+		width:60%;
+		margin:16px auto;
+		background-color:rgba(200,200,160,0.9);
+		border-radius:6px;
+		transition:all 0.5s ease;
+		padding:6px;
+		text-align:center;
+	}
+	.made:hover{
+		box-shadow:0 0 10px 0 rgba(106,6,6,0.5);
+	}
+	span{
+		width:100px;
+		color:hsl(20,100%,20%);
+		display:inline-block;
+		text-align:right;
+		padding-right:14px;
+	}
+	input[type="text"]{
+		padding-left:6px;
+		color:#666;
+	}`
+	input,button{
+		outline:none;
+	}
+	button{
+		width:100px;
+		height:30px;
+		cursor:pointer;
+		line-height:26px;
+		background-color:hsla(100,20%,70%,0.6);
+		box-shadow:0 0 6px 0 #666;
+	}
+</style>
+<body>
+	<div class="content">
+		<table cellpadding="10" cellspacing="0" border="1"> <!-- 在这里设置table的border的宽至少为1，让单元格也有边框-->
+			<caption>人物表</caption>
+			<thead>
+				<tr>
+					<th>人物ID</th>
+					<th>姓名</th>
+					<th>性别</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="made">
+			<p><span>人物姓名：</span><input id="mName" type="text" /></p>
+			<p><span>人物性别：</span><input id="mSex" type="text" /></p>
+			<button id="add">生成</button>
+		</div>
+	</div>
+</body>
+<script>
+	/*//先创建空对象形式创建对象
+	var person = {};			//设置空对象
+	person.id = "001";			//添加对象的id属性
+	person.name = "诸葛亮";		//添加对象的name属性
+	person.sex = "男";			//添加对象的sex属性
+	var person2 = {};
+	person2.id = "002";
+	person2.name = "貂蝉";
+	person2.sex = "女";
+	var person3 = {};
+	person3.id = "003";
+	person3.name = "赵云";
+	person3.sex = "男";*/
+	/*//字面量形式创建对象
+	var person = {
+		id:"001",
+		name:"诸葛亮",
+		sex:"男"
+	}
+	var person2 = {
+		id:"002",
+		name:"貂蝉",
+		sex:"女"
+	}
+	var person3 = {
+		id:"003",
+		name:"赵云",
+		sex:"男"
+	}*/
+	//以内置方法new Object()创建对象
+	var person = new Object();
+	person.id = "001";			//添加对象的id属性
+	person.name = "诸葛亮";		//添加对象的name属性
+	person.sex = "男";			//添加对象的sex属性
+	var person2 = {};
+	person2.id = "002";
+	person2.name = "貂蝉";
+	person2.sex = "女";
+	var person3 = {};
+	person3.id = "003";
+	person3.name = "赵云";
+	person3.sex = "男";
+	var perId = document.getElementsByTagName("td")[0];
+	var perName = document.getElementsByTagName("td")[1];			//当将这个变量取名为name时会出错
+	var perSex = document.getElementsByTagName("td")[2];
+	var per2Id = document.getElementsByTagName("td")[3];
+	var per2Name = document.getElementsByTagName("td")[4];
+	var per2Sex = document.getElementsByTagName("td")[5];
+	var per3Id = document.getElementsByTagName("td")[6];
+	var per3Name = document.getElementsByTagName("td")[7];
+	var per3Sex = document.getElementsByTagName("td")[8];
+	var tBody = document.querySelector("tbody");
+	perId.innerHTML = person.id;
+	perName.innerHTML = person.name;
+	perSex.innerHTML = person.sex;
+	per2Id.innerHTML = person2.id;
+	per2Name.innerHTML = person2.name;
+	per2Sex.innerHTML = person2.sex;
+	per3Id.innerHTML = person3.id;
+	per3Name.innerHTML = person3.name;
+	per3Sex.innerHTML = person3.sex;
+	var add = document.getElementById("add");
+	var addName = document.getElementById("mName");
+	var addSex = document.getElementById("mSex");
+	var ids = 3;												// 自增ID初始化
+	add.onclick = function(){
+		if(addName.value != "" && addSex.value != ""){				// 新加入的name和sex值不能为空
+		    this.style.cursor = "pointer";							// 恢复为正常手抓形光标
+			var newTr = document.createElement("tr");				//	创建新的tr标签
+			var newTd1 = document.createElement("td");				//	创建新的td标签
+			var newTd2 = document.createElement("td");
+			var newTd3 = document.createElement("td");
+			ids ++;												//  每点一下“生成”按钮，ID自增1
+			if(ids<10){
+				ids = "00"+ids.toString();							//  将ID格式化，以00开头
+			}else if(ids>=10 && ids<100){
+				ids = "0"+ids.toString();							//  将ID格式化，以0开头
+			}else{
+				ids = ids.toString();								//  将ID格式化，是一个正常数字字符串
+			}
+			newTd1.innerHTML = ids;
+			ids = Number(ids);						//  将格式化的ID重置为正常的数字类型，让它后续正常自增
+			newTd2.innerHTML = addName.value;
+			addName.value = "";
+			newTd3.innerHTML = addSex.value;
+			addSex.value = "";
+			tBody.appendChild(newTr);								// 将创建的tr标签放到tbody标签内
+			newTr.appendChild(newTd1);								// 将创建的第一个td放到创建的tr标签内
+			newTr.appendChild(newTd2);
+			newTr.appendChild(newTd3);
+		}else{
+			this.style.cursor = "not-allowed";						// 光标设置为禁止图标形态
+		}
+	}
+	/*function test(id,name,sex){
+		return {					//返回一个对象
+			id,						//id:id的简写
+			name,					//name:name的简写
+			sex                     //sex:sex的简写
+		}
+	}
+	var test1 = test("004","关羽","男");
+	console.log(test1.id)*/
+	/*//用构造函数生成实例,构造函数就是一个原型对象或者说是一个类，构造函数名就是原型对象名或类名
+	function test(id,name,sex){
+		this.name = name;
+		this.id = id;
+		this.sex = sex;
+	}
+	function test1(id,name,sex){
+		this.id = id;
+		this.name = name;
+		this.sex = sex;
+	}
+	var pers1 = new test("004","关羽","男");
+	var pers2 = new test("005","孙尚香","女");
+	console.log(pers1.constructor == test);		//pers1和pers2会自动生成constructor属性，指向构造函数test
+	console.log(pers1 instanceof test);			//instanceof是用来验证原型对象与实例对象之间的关系
+	console.log(pers1 instanceof test1);*/
+	/*//利用构造函数带有的prototype生成实例对象，方便继承而节省内存
+	function testX(id,name,sex){
+		this.id = id;
+		this.name = name;
+		this.sex = sex;
+	}
+	testX.prototype.style = "追风者";
+	testX.prototype.action = function(){
+		console.log(111)
+	}
+	var persA = new testX("004","柯昌宇","男","111");
+	var persB = new testX("005","成龙","男","111");
+	persB.action();
+	console.log(persA.style);
+	console.log(persB.style);
+	console.log(persA.action == persB.action);
+	console.log(testX.prototype.isPrototypeOf(persA));	//isPrototypeOf()判断某个prototype和某个实例对象的关系
+	console.log(persA.hasOwnProperty("style"));		//hasOwnProperty是用来判断该属性是本地属性还是继承自prototype
+	console.log(persA.hasOwnProperty("name"));*/
+</script>
+</html>

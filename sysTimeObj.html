@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>系统时间对象</title>
+	<link rel="shortcut icon" href="../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+	<style>
+		#nowTime{
+			width:60%;
+			margin:30px auto;
+			background-color:rgba(50,20,100,0.3);
+			text-align:center;
+			font-size:30px;
+		}
+	</style>
+	<script>
+		window.onload =function(){
+			 /*var timeObj = new Date();	              //创建系统时间对象
+			 console.log(timeObj);
+			 var nowYear = timeObj.getFullYear();
+			 var nowMonth = timeObj.getMonth()+1;    //获取到的月份是从0开始的，实际月份需要加1
+			 var nowDate = timeObj.getDate();
+			 console.log("当前日期："+nowYear+"年"+nowMonth+"月"+nowDate+"日");
+			 var nowDay = timeObj.getDay();
+			 function week(day){
+			 	switch(day){					     //将函数参数作为变量加入到判断条件中
+			 		case 0:console.log("今天是星期日");
+			 		break;						     //break跳出，很关键，不加的话会一直执行不符合条件的其他语句
+			 		case 1:console.log("今天是星期一");
+			 		break;
+			 		case 2:console.log("今天是星期二");
+			 		break;
+			 		case 3:console.log("今天是星期三");
+			 		break;
+			 		case 4:console.log("今天是星期四");
+			 		break;
+			 		case 5:console.log("今天是星期五");
+			 		break;
+			 		case 6:console.log("今天是星期六");
+			 		break;
+			 	}
+			 }
+			 week(nowDay);*/
+		     function time(){
+		     	var timeObj = new Date();	        //创建系统时间对象,放在函数体内为的是动态刷新当前时间
+				var nowHours = timeObj.getHours();
+			    var nowMinus = timeObj.getMinutes();
+			    var nowSecs = timeObj.getSeconds();
+			    var timeBox = document.getElementById("nowTime");
+			    var cont = document.getElementsByTagName("span")[0];
+			    var point = ":";
+			    setT(nowHours,nowMinus,nowSecs)
+			    function setT(){
+			     	for(var i=0;i<arguments.length;i++){			//遍历参数
+			     		if(arguments[i]<=9 && arguments[i]>=0){		//将0到9转化为"00"到"09"
+			     			arguments[i]="0"+arguments[i];
+			     		}
+			     		else{
+			     			arguments[i]+="";
+			     		}
+			     	}
+		     		cont.innerHTML = arguments[0]+point+arguments[1]+point+arguments[2];
+		     	}
+		     }
+		 	 setInterval(time,1000)
+		 }
+	</script>
+</head>
+<body>
+	<div id="nowTime">
+		<span></span>
+	</div>
+</body>
+</html>

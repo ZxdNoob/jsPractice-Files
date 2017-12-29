@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>NaN和isNaN()</title>
+	<link rel="shortcut icon" href="../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+	<script>
+		var vl1 = 250;
+		var vl2 = "250";
+		var notN = NaN === NaN;
+		var fn1 = function(){console.log("Hello,World!")};
+		var vl3 = "ooopppeenn56!";
+		console.log(Number(fn1)+"---"+typeof Number(fn1)+"---"+notN);
+		console.log(isNaN(vl1)+"---"+isNaN(vl2)+"---"+"---"+isNaN(fn1)+"---"+isNaN(vl3));
+	</script>
+</head>
+<body>
+	<p>NaN本身属于数字类型，所以typeof NaN得到的就是Number。将NaN转化为布尔值就是false，它和自己进行全等判断返回的也是false。isNaN()方法，首先它将里面传的值交给Number()进行处理，然后在得到结果后进行判断，如果该值不是数字类型，返回false，是数字类型就会返回true。这就是为什么它对NaN进行判断时返回的是true，NaN也是Number（数字类型）嘛！</p>
+</body>
+</html>

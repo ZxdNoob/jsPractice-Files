@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>数据类型</title>
+	<link rel="shortcut icon" href="../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+	<script>
+	//5大基本数据类型（数字（Number）、字符串（String）、布尔值（Boolean）、
+	//未定义（Undefined）、空（Null））加1大混合数据类型——对象（Object）,ES6新增Symbol数据类型
+	/*var num = 0;
+	console.log(typeof num);						//typeof用来判断字符类型
+	var str = " ZuoXindao ";						//注意空格也算进了字符长度，1个空格就是1个字符长度
+	console.log(str.length);                        //9+2=11
+	console.log(str.charAt(0));						//charAt(i)找到下标为i的字符，字符串str第一个字符是空格，所以打印出空
+	var hasOff = true;								//布尔值只有两种：true和false
+	console.log(typeof hasOff);
+	var ui;
+	var und = undefined;
+	console.log(typeof ui+"---------------"+typeof und);                                                                   //像这种只声明没有赋值或者赋值给undefined的属于未定义（Undefined）数据类型
+	var hello = function(){
+		document.write("Hello,Javascript!");
+	}
+	console.log(typeof hello);	//打印出function，说明属于function数据类型，但是function被划分为Object，所以可以将函数看做对象
+	var nul = null;
+	console.log(typeof nul);	//之所以打印的是object，是因为JS将null当作空对象进行存储的
+	var obj = {name:"小明",age:17,sex:"男"};
+	console.log(typeof obj);
+	var arr = ["张三","李四","王五","黄六","周七","吴八","赵九"];
+	console.log(typeof arr);    //数组属于数组对象，所以它是对象（Object）数据类型*/
+	//将字符串转换成数字
+	var str1 = "256";
+	str1 = str1 * 1;                            //可以将数字字符串减乘除求余累加累减(注意不能用加或其他符号)        一个数字，自动转换成Number类型，这个属于隐式数字类型转换
+	var str2 = "360";
+	str2 = Number(str2);			//也可以用Number方法进行转换
+	console.log(typeof str1);
+	console.log(typeof str2);
+	var str3 = "";
+	var str4 = "      ";
+	console.log(Number(str3)+"----"+str4*1);		//空字符串或者无限空格字符串转换成数字就是0
+	var str5 = "jijini93234件";
+	console.log(Number(str5));	//根本不像数字的字符串转变成数字就是NaN，NaN属于特殊的数字，意思是不是数字，但是它属于Number类型
+	</script>
+</head>
+<body>
+</body>
+</html>

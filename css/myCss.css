@@ -1,0 +1,118 @@
+*{
+	margin:0;
+	padding:0;
+	font-size:18px;
+	color:#333;
+	font-family:"Microsoft Yahei";
+}
+.content{
+	width:60%;
+	margin:20px auto;
+	background-color:rgba(90,70,100,0.6);
+	padding:20px;
+	position:relative;
+}
+ul{
+	list-style-image: url(../img/list-ico_c.png);
+}
+li:first-child{
+	text-align:center;
+	color:hsl(260,80%,30%);
+	font-size:26px;
+	list-style:none;
+	margin-left:0;
+	padding-left:0;
+	background-color:rgba(200,102,50,0.6);
+	cursor:auto;
+}
+li:nth-child(2){
+	margin-top:10px;
+}
+li{
+	line-height:1.5em;
+	margin-bottom:10px;
+	margin-left:20%;
+	padding-left:30px;
+	cursor:pointer;
+	background-color:rgba(100,25,120,0.2);
+}
+.hasText{
+	list-style-image: url(../img/list-ico_o.png);
+}
+.game{
+	width:80%;
+	margin:10px auto;
+	background-color:orange;
+	padding:26px;
+	font-size:24px;
+	font-family:"宋体";
+	display:table;
+}
+.note{
+	width:18%;
+	border:6px solid rgb(60,60,100);
+	border-radius:10px;
+	display:table-cell;
+}
+.note p{
+	margin-left:10%;
+}
+.play{
+	width:60%;
+	display:table-cell;
+	padding-left:6%;
+}
+b{
+	float:right;
+}
+i{
+	font-style:normal;
+	color:#dd6666;
+}
+input[type="button"]{
+	outline:none;
+	cursor:pointer;
+	border:none;
+	margin-bottom:14px;
+	width:60px;
+	height:32px;
+	line-height:28px;
+	background-color:rgba(20,20,30,0.2);
+	border-radius:6px;
+	color:hsla(200,30%,90%,0.8);
+}
+input[type="button"]:hover{
+	box-shadow:0 0 6px 0 #ddd;
+	color:#dedede;
+}
+img{
+	height:30px;
+	margin-left:30px;
+	vertical-align:middle;
+}
+span{
+	display:inline-block;
+	text-align:center;
+	position:absolute;
+	top:69%;
+	left:55%;
+	font-size:30px;
+	color:#dddd33;
+}
+@media screen and (max-width:830px) {				/*当屏幕小于或等于830px时*/
+	img{
+	height:20px;
+	margin-left:6px;
+	}
+	span{
+		background:red;
+		top:86%;
+		left:33%;
+		font-size:20px;
+		box-shadow:0 0 4px 0 rgb(10,20,30);
+	}
+	b{
+		font-weight:normal;
+		font-size:14px;
+	}
+}
