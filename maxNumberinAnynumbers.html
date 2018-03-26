@@ -17,6 +17,7 @@
         p{margin-left:10px;margin-bottom:30px;text-align:left;}
         #submit{margin-bottom:20px;}
         span{color:#ffe;}
+        b{color:#ffa;}
     </style>
 </head>
 <body>
@@ -27,22 +28,41 @@
     <div id="show">
         <p id="msg">您添加的数字有：</p>
         <button id="submit">提交</button>
+        <p id="show-max"></p>
     </div>
     <script>
         var cont = document.getElementById("content");
         var msg = document.getElementById("msg");
+        var maxShow = document.getElementById("show-max");
         var number = document.getElementById("num");
         var addBtn = document.getElementById("add");
         var confm = document.getElementById("submit");
+        var numArr = [];                    //初始化存放所有输入过的数字的数组
+        var maxNum;                         //最大数
         addBtn.onclick = addNum;
+        confm.onclick = sbm;
         function addNum(){
-            var num = number.value;
-            if(Number(num) !== NaN){
+            confm.style.visibility = "visible";
+            if(number.value !== ""){
+               var num = Number(number.value);
+            }
+            if( typeof num === "number" && num === num ){
+                numArr.push(num);
                 var span = document.createElement("span");
                 span.innerHTML = num+"  ";
                 msg.appendChild(span);
+                number.value = "";
             }else{
-                alert("请输入数字！");
+                alert("请输入正常的数字！");
+            }
+        }
+        function sbm(){
+            if( msg.innerHTML !== "您添加的数字有：" ){
+                this.style.visibility = "hidden";
+                maxNum = Math.max.apply(null,numArr);
+                maxShow.innerHTML = "最大数是："+"<b>"+maxNum+"</b>";
+            }else{
+                this.style.visibility = "visible";
             }
         }
     </script>

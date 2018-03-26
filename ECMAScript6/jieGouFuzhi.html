@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>解构赋值</title>
+    <link rel="shortcut icon" href="../../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+</head>
+<body>
+
+    <script>
+        //解构赋值，让赋值语句更加简便
+
+        //通常情况下我们将多个赋值语句简写为如下形式
+        /*let name = "小花",age = 18,sex = "女";
+        console.log("我叫"+name+"，今年"+age+"岁，是个"+sex+"孩儿！");*/
+        //解构赋值如下
+        /*let [name2,age2,sex2] = ["小聪",20,"男"];
+        console.log("我叫"+name2+"，今年"+age2+"岁，是个"+sex2+"孩儿！");*/
+
+        //对象的解构赋值，需要注意的是对象是无序的，所以变量名必须与对象键名同名才能取得正确值
+        /*let { name,age,sex,hobby,job } = { name:"黄药师",age:56,sex:"男",hobby:"吹笛子",job:"武功研究" };
+        console.log(name,age,sex,hobby,job);*/
+
+        //下标对应
+        /*let [,,third] = [1,3,5];
+        console.log(third);    //third代表第三个元素，前两个元素未取名*/
+
+        //与扩展运算符一起使用
+        /*let [item1,item2,...item] = [1,2];
+        console.log(item);              //扩展运算符代表一个数组，这个数组由剩余项组成，如果没有剩余项就为空数组
+        let [i1,i2,i3,...i] = [0,2,4,6,8,10];
+        console.log(i);*/
+
+        //数组也可以用对象的形式解构
+        let { 0:item1,1:item2,2:item3,length:arrLen } = [ 1,2,3 ];
+        console.log(arrLen);
+    </script>
+
+</body>
+</html>

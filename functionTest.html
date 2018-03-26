@@ -41,10 +41,10 @@
 			sub(subBtn,"onclick",val1,aSpan[0]);
 			sub(subBtn2,"onclick",val2,aSpan[1]);
 			//封装加法函数
-			function add(btn,evt,chagVal,tot){
+			function add(btn,eve,chagVal,tot){
 				var val = chagVal;				//用一个变量来承接这第三个操作对象参数，使得子函数语句块能够访问到它
 				var total = tot;
-				btn[evt] = function (){	//注意不能写成btn.evt，如果是btn.evt，add(addBtn,"onclick")就变成了btn."onclick"
+				btn[eve] = function (){	//注意不能写成btn.eve，如果是btn.eve，add(addBtn,"onclick")就变成了btn."onclick"
 				    var newVal = val.value;
 					newVal ++;
 					val.value = newVal;
@@ -80,7 +80,7 @@
 			}
 			//JS解析代码的过程：先预解析再逐行解读代码
 			//预解析：先找到关键字var、function等等；所有的变量在解读代码前都是undefined，所有函数在调用前都只是一个代码块，
-			//遇到重复的，只留一个，function名和变量名重复的话，由function会覆盖变量，同名函数之间，后者覆盖前者，直到找完
+			//遇到重复的，只留一个，function名和变量名重复的话，function名会覆盖变量名，同名函数之间，后者覆盖前者，直到找完
 			//解读代码：逐行进行解读，依据预解析中得到的值进行操作，此时同名表达式会覆盖同名函数
 
 			/*console.log(xy);			// undefined

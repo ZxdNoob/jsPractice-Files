@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>let和const</title>
+    <link rel="shortcut icon" href="../../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+    <style>
+        html{
+            font: "Microsoft Yahei" 18px;
+            color: #666;
+        }
+        body,div,button{
+            margin: 0;
+            padding: 0;
+        }
+        #btnGroup{
+            width: 60%;
+            margin: 20px auto;
+            text-align: center;
+        }
+        button{
+            width: 50px;
+            border-radius: 6px;
+            height: 32px;
+            line-height: 22px;
+            cursor: pointer;
+            outline: none;
+            border: none;
+            background-color: rgba(10,200,30,.6);
+            margin-right: 6px;
+            transition: all .3s ease;
+        }
+        button:last-child{
+            margin-right: 0;
+        }
+        button:hover{
+            color: #f2f201;
+            box-shadow: 0 0 6px #333;
+        }
+    </style>
+</head>
+<body>
+    <div id = "btnGroup">
+        <button>按钮1</button>
+        <button>按钮2</button>
+        <button>按钮3</button>
+        <button>按钮4</button>
+        <button>按钮5</button>
+    </div>
+    <script>
+        //let和var一样都是用来声明变量的，但是和var有几大区别
+
+        //区别一，let变量不会声明提前即不会被提升，而var变量是可以的
+        /*console.log(myVariable);            //undefined，变量提升了
+        console.log(myLet);                 //报错，变量未提升
+        var myVariable = "Hello,ES5!";
+        let myLet = "Hello,ES6!";*/
+
+        //区别二，let变量只能从该变量声明所在的代码块中访问，即有明确的作用域，而var除了函数体代码块是局部作用域，其余所有代码块都作为全局作用域
+        /*{
+            var varObj = {name:"var声明"};
+            let letObj = {name:"let声明"};
+            console.log(varObj);
+            console.log(letObj);
+        }
+        console.log(varObj);            //可以输出
+        console.log(letObj);            //报错，因为letObj仅限上面的代码块进行访问*/
+
+        //区别三，let声明的变量名在一个语句块是唯一的，不能像var声明一样出现后者声明的变量值覆盖前者声明的变量值
+        /*{
+            var myValue = 100;
+            var myValue = 0;
+            console.log(myValue);       //输出的是0，后者声明的变量值覆盖了前者
+            let letValue = 100;
+            let letValue = 0;
+            console.log(letValue);      //报错，同一代码块中的变量名只能用let声明一次
+        }*/
+
+        //区别四，let在for循环中有父子作用域，而var是没有的
+        /*for(var i = 1 ,len = 5;i <= len;i++){
+            console.log(i);                 //依次输出“1、2、3、4、5”
+        }
+        console.log(i);                     //循环体结束后将5++赋给了i，所以输出的是6
+
+        for(let j = 1,max = 5;j<=max;j++){
+            console.log(j);                //依次输出“1、2、3、4、5”
+        }
+        console.log(j);                    //j在循坏体外不能被访问，所以会报错*/
+
+        let box = document.getElementById("btnGroup");
+        let btns = box.getElementsByTagName("button");
+
+        //用var声明i，通常情况下，无论点击哪一个按钮获取的i都是是for循环结束后得到的i最大值再加1
+
+        /*for(var i = 0,bLen = btns.length;i<bLen;i++){
+            btns[i].onclick = function(){
+                alert("您点击的是第"+(i+1)+"个按钮！");
+            };
+        }*/
+
+        /*for(var i = 0,bLen = btns.length;i<bLen;i++){
+            (function(i){                           //用闭包解决得到的i总是6的问题
+                btns[i].onclick = function(){
+                    alert("您点击的是第"+(i+1)+"个按钮！");
+                };
+            })(i);
+        }*/
+
+        //用let声明循环条件变量i，不需要用闭包，点击的按钮会对应i的值
+        for(var i = 0,bLen = btns.length;i<bLen;i++){
+            (function(i){                           //用闭包解决得到的i总是6的问题
+                btns[i].onclick = function(){
+                    alert("您点击的是第"+(i+1)+"个按钮！");
+                };
+            })(i);
+        }
+
+        //const专门声明常量，它有如下几大特点
+        //一，只在当前代码块中可以被访问
+        /*{
+            const myConst = 3.141593;
+            console.log(myConst);           //正常输出
+        }
+            console.log(myConst);           //报错，找不到myConst*/
+
+        //二，不能重复声明，也不能修改变量值，需要注意的是如果常量是一个对象等引用数据类型，可以修改其属性值
+        // const myWant = "我不好说";
+        // const myWant = "我也不好说";
+        //console.log(myWant);          //报错，不能重复声明
+        // const city = "上海";
+        // city = "北京";
+        // console.log(city);              //报错，不能修改常量的值
+        // const citys = ["上海","北京"];
+        // citys[0] = "深圳";
+        // citys[1] = "广州";
+        // citys[2] = "厦门";
+        // console.log(citys);                 //修改成功，常量citys是一个数组，存放的是一个地址，在这个地址上可以进行修改
+
+        //三，必须给常量赋值
+        /*const noInitConst;
+        console.log(noInitConst);               //报错，常量未赋值*/
+
+        //四，声明的常量不会有作用域提升问题
+        console.log(beforeMyConst);             //报错，不能访问到这个常量
+        const beforeMyConst = "你好！";
+    </script>
+</body>
+</html>

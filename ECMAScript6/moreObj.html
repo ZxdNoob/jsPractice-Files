@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>内置对象的扩展</title>
+    <link rel="shortcut icon" href="../../jQueryPractices/img/myFavicon.ico" type="image/icon" />
+    <style>
+        html{
+            font: "Microsoft Yahei" 18px;
+            color: #303030;
+        }
+        body,ul,li{
+            margin: 0;
+            padding: 0;
+        }
+        li{
+            list-style-type: none;
+            margin-bottom: 10px;
+            background-color: rgb(255, 116, 140);
+        }
+        li:last-child{
+            margin-bottom: none;
+        }
+        li:hover{
+            background-color: rgb(28, 55, 91);
+            color: #fefefe;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+    </ul>
+    <script>
+        //内置对象的扩展之模板字符串——``
+        let titName = "tit";
+        let cont = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut sit expedita beatae repellat quas iusto, nulla autem enim, ullam sequi reprehenderit quis saepe, id accusamus ab est quaerat quibusdam odio?";
+        let html = `
+                    <!DOCTYPE html>
+                    <html>
+                        <head>
+                            <title>我的网页</title>
+                        </head>
+                        <body>
+                            <h1 class="${titName}" style="color:red;background-color:white">最大标题标签</h1>
+                            <p>
+                                ${cont}
+                            </P>
+                        </body>
+                    </html>`;
+        console.log(html);
+        //内置对象的扩展之数组的扩展
+
+        //Array.from()   将一些伪数组和一些非正式数组转化为真正的数组
+        /*let lis = document.getElementsByTagName("li");
+        let isArrS = Array.isArray(lis);
+        console.log(isArrS);
+        let liArr = Array.from(lis);
+        console.log(liArr);
+        let isArrE = Array.isArray(liArr);
+        console.log(isArrE);
+        let theStr = "123456";
+        let theStrArr = Array.from(theStr);
+        console.log(theStrArr);*/
+
+        //Array.of()    将数组各个元素放到里面组成一个数组，效果和 new Array()和Array()一样，且弥补了它们的不足
+        let Arr = Array.of("左信道","张仙红","左若希");
+        console.log(Arr);
+
+        //内置对象扩展之对象的扩展
+
+        //key和value变量同名时可以只写一个
+        let name = "张飞";
+        let age = 19;
+        let sanguoMan = { name,age };
+        console.log(sanguoMan);
+
+        //Object.assign() 把多个对象合成一个对象
+        let obj1 = { name:"张三" };
+        let obj2 = { age };
+        let obj3 = { sex:"男" }
+        let man = Object.assign(obj1,obj2,obj3);
+        console.log(man);
+
+
+        //扩展运算符 ...
+        //拆解作用
+        let msg = "今天天气好转了！";
+        let toArr = [...msg];
+        console.log(toArr);
+
+        //数组去重
+        let myArr = [1,2,1,2,1,3,1,4,6,8,9,9];
+        let mySet = new Set(myArr);             //先利用Set特性转化为Set数据，实现元素的去重
+        let newArr = [...mySet];                //将Set转化为数组
+        console.log(newArr);
+    </script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>模拟淘宝评星</title>
+    <link rel="shortcut icon" href="../jQueryPractices/img/myFavicon.ico" type="image/icon" />
+    <style>
+        ul,li{
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+        .shop-rating{
+            height: 25px;
+            overflow: hidden;
+            zoom: 1;
+            padding: 2px 0;
+            position: relative;
+            z-index: 999;
+            font:12px Arial;
+            color:#000;
+            line-height:1.2em
+        }
+        .shop-rating span {
+            height: 23px;
+            display: block;
+            line-height: 23px;
+            float: left;
+        }
+        .shop-rating span.title {
+            width: 125px;
+            text-align: right;
+            margin-right: 5px;
+        }
+        .shop-rating ul {
+            float: left;
+        }
+        .shop-rating .result {
+            margin-left: 20px;
+            padding-top: 2px;
+        }
+        .shop-rating .result span {
+            color: #ff6d02;
+        }
+        .rating-level,
+        .rating-level a {
+            background: url(img/o_star.png) no-repeat scroll 1000px 1000px;
+        }
+        .rating-level {
+            background-position: 0px 0px;
+            width: 120px;
+            height: 23px;
+            position: relative;
+            z-index: 1000;
+        }
+        .shop-rating .result em {
+            color: #f60;
+            font-family: arial;
+            font-weight: bold;
+        }
+        .rating-level li {
+            display: inline;
+       }
+      .rating-level a {
+           line-height: 23px;
+           height: 23px;
+           position: absolute;
+           top: 0px;
+           left: 0px;
+           text-indent: -999em;
+           *zoom: 1;
+           outline: none;
+      }
+      .rating-level a.one-star {
+           width: 20%;
+           z-index: 6;
+      }
+      .rating-level a.two-stars {
+           width: 40%;
+           z-index: 5;
+      }
+      .rating-level a.three-stars {
+           width: 60%;
+           z-index: 4;
+      }
+      .rating-level a.four-stars {
+           width: 80%;
+           z-index: 3;
+      }
+      .rating-level a.five-stars {
+           width: 100%;
+           z-index: 2;
+      }
+      .rating-level .current-rating, .rating-level a:hover {
+          background-position:0 -28px
+      }
+      .rating-level a.one-star:hover,.rating-level a.two-stars:hover,.rating-level a.one-star.current-rating,.rating-level a.two-stars.current-rating{
+          background-position:0 -116px;
+      }
+      .rating-level .three-stars .current-rating,.rating-level .four-stars .current-rating,.rating-level .five-stars .current-rating{
+            background-position:0 -28px;
+      }
+    </style>
+</head>
+<body>
+<div class="shop-rating">
+     <span class="title">你对我人品的评价：</span>
+     <ul class="rating-level" id="stars2">
+      <li><a href="javascript:void(0);" class="one-star" star:value="20">20</a></li>
+      <li><a href="javascript:void(0);" class="two-stars" star:value="40">40</a></li>
+      <li><a href="javascript:void(0);" class="three-stars" star:value="60">60</a></li>
+      <li><a href="javascript:void(0);" class="four-stars" star:value="80">80</a></li>
+      <li><a href="javascript:void(0);" class="five-stars" star:value="100">100</a></li>
+     </ul>
+     <span id="stars2-tips" class="result"></span>
+     <input type="hidden" id="stars2-input" name="b" value="" size="2" />
+    </div>
+    <script>
+      var TB = function() {
+        var T$ = function(id) {
+          return document.getElementById(id)
+        }
+        var T$$ = function(r, t) {
+          return (r || document).getElementsByTagName(t)
+        }
+        var Stars = function(cid, rid, hid, config) {
+        var lis = T$$(T$(cid), 'li'), curA;
+          for (var i = 0, len = lis.length; i < len; i++) {
+            lis[i]._val = i;
+            lis[i].onclick = function() {
+             T$(rid).innerHTML = '<em>' + (T$(hid).value = T$$(this, 'a')[0].getAttribute('star:value')) + '分</em> - ' + config.info[this._val];
+             curA = T$$(T$(cid), 'a')[T$(hid).value / config.step - 1];
+            };
+            lis[i].onmouseout = function() {
+             curA && (curA.className += config.curcss);
+            }
+            lis[i].onmouseover = function() {
+             curA && (curA.className = curA.className.replace(config.curcss, ''));
+            }
+           }
+          };
+        return {Stars: Stars}
+     }().Stars('stars2', 'stars2-tips', 'stars2-input', {
+      'info' : ['人品极差', '人品不咋地', '人品一般吧', '人品不错', '人品极好啊'],
+      'curcss': ' current-rating',
+      'step': 20
+     });
+    </script>
+</body>
+</html>

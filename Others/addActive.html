@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>选中状态</title>
+    <link rel="shortcut icon" href="../../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+    <style>
+        html{
+            font: "Microsoft Yahei" 18px;
+            color: #666;
+        }
+        body,div,ul,li,a{
+            margin: 0;
+            padding: 0;
+        }
+        li{
+            list-style-type: none;
+        }
+        a{
+            text-decoration: none;
+        }
+        .list{
+            width: 80%;
+            max-width: 960px;
+            min-width: 526px;
+            margin: 10px auto;
+        }
+        .list ul{
+            width: 100%;
+            text-align: center;
+        }
+        .list ul li{
+            width: 10%;
+            margin-right: 6px;
+        }
+        .list ul li,
+        .list li a{
+            display: inline-block;
+        }
+        .list ul li:last-child{
+            margin-right: 0;
+        }
+        .list li a{
+            width: 100%;
+            height: 36px;
+            line-height: 36px;
+            background-color: rgba(60,60,233,.5);
+            color: #dedede;
+        }
+        .list li a.active,
+        .list li a:hover{
+            background-color: rgba(220,70,120,.6);
+            color: #363636;
+        }
+    </style>
+</head>
+<body>
+    <div class="list" id="list">
+        <ul>
+            <li><a href="javascript:void(0);">项目1</a></li>
+            <li><a href="javascript:void(0);">项目2</a></li>
+            <li><a href="javascript:void(0);">项目3</a></li>
+            <li><a href="javascript:void(0);">项目4</a></li>
+            <li><a href="javascript:void(0);">项目5</a></li>
+            <li><a href="javascript:void(0);">项目6</a></li>
+        </ul>
+    </div>
+
+</body>
+<script>
+    var myList = document.getElementById("list");
+    var myALink = myList.getElementsByTagName("a");
+    var firstA = myALink[0];
+    var i = 0;
+    var aLen = myALink.length;
+    var addAct = function(ele){
+        return ele.className = "active";
+    };
+    var removeAct = function(ele){
+        return ele.className = "";
+    };
+    addAct(firstA);
+    for(;i<aLen;i++){
+        myALink[i].index = i+1;
+        myALink[i].onclick = function(){
+            if(this.index === 1){
+                addAct(this);
+                removeAct(myALink[1]);
+                removeAct(myALink[2]);
+                removeAct(myALink[3]);
+                removeAct(myALink[4]);
+                removeAct(myALink[aLen-1]);
+            }else if(this.index === 2){
+                addAct(this);
+                removeAct(firstA);
+                removeAct(myALink[2]);
+                removeAct(myALink[3]);
+                removeAct(myALink[4]);
+                removeAct(myALink[aLen-1]);
+            }else if(this.index === 3){
+                addAct(this);
+                removeAct(firstA);
+                removeAct(myALink[1]);
+                removeAct(myALink[3]);
+                removeAct(myALink[4]);
+                removeAct(myALink[aLen-1]);
+            }else if(this.index === 4){
+                addAct(this);
+                removeAct(firstA);
+                removeAct(myALink[1]);
+                removeAct(myALink[2]);
+                removeAct(myALink[4]);
+                removeAct(myALink[aLen-1]);
+            }else if(this.index === 5){
+                addAct(this);
+                removeAct(firstA);
+                removeAct(myALink[1]);
+                removeAct(myALink[2]);
+                removeAct(myALink[3]);
+                removeAct(myALink[aLen-1]);
+            }else if(this.index === aLen){
+                addAct(this);
+                removeAct(firstA);
+                removeAct(myALink[1]);
+                removeAct(myALink[2]);
+                removeAct(myALink[3]);
+                removeAct(myALink[4]);
+            }
+        };
+    }
+</script>
+</html>

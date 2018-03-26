@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>星级评分模拟</title>
+    <link rel="shortcut icon" href="../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+    <style>
+        html{font:"Microsoft Yahei" 18px;color:#666;}
+        body,div,span{margin:0;padding:0;}
+        #starBox{width:80%;max-width:1000px;min-width:600px;background-color: rgb(171, 226, 247);margin:20px auto;text-align:center;border-radius:10px;box-shadow:0 0 6px 0 #777;}
+        #starBox span{display:inline-block;width:80px;height:80px;border-radius:50%;background-color: #ffaa02;cursor:pointer;user-select:none;}
+        #starBox .active{background-color: #ff6666;}
+    </style>
+</head>
+<body>
+    <div id="starBox">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</body>
+<script>
+    var box = document.getElementById("starBox");
+    var stars = box.getElementsByTagName("span");
+    var sLen = stars.length;
+    var isOn = false;
+    var i = 0;
+    for(;i<sLen;i++){
+        stars[i].index = i+1;                           //自定义span的索引值属性
+    }
+    box.onclick = function(e){                          //利用事件委托高效率执行点击事件
+        var eObj = e.target;                            //e.target为触发的元素
+        // 检查事件源e.targe是否为span
+        if(eObj && eObj.nodeName == "SPAN") {
+            var me = eObj;
+            var n = me.index;
+            clenS();
+            starsOn(n);
+            isOn = true;
+        }
+    };
+
+    box.onmouseover = function(e){                          //利用事件委托高效率执行点击事件
+        var eObj = e.target;                            //e.target为触发的元素
+        // 检查事件源e.targe是否为span
+        if(eObj && eObj.nodeName == "SPAN" && !isOn) {
+            var me = eObj;
+            var n = me.index;
+            clenS();
+            starsOn(n);
+        }
+    };
+
+    box.onmouseout = function(e){
+        var eObj = e.target;                            //e.target为触发的元素
+        // 检查事件源e.targe是否为span
+        if(eObj && eObj.nodeName == "SPAN") {
+            starsOff();
+        }
+    }
+
+    function starsOn(num){
+        var k = 0;
+        for(;k<num;k++){
+            stars[k].className = "active";
+        }
+    }
+
+    function clenS(){
+        var j=0;
+        for(;j<sLen;j++){
+            stars[j].className = "";
+        }
+    }
+
+    function starsOff(){
+        if(!isOn){
+            clenS();
+        }
+    }
+</script>
+</html>

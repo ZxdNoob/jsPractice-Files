@@ -97,10 +97,14 @@
 			}
 			//遍历span标签
 			for(var i=0;i<aStars1.length;i++){
-				aStars1[i].index = i+1;
+				aStars1[i].index = i+1;					//设置索引值，索引值对应星星个数
 				aStars1[i].onmouseover = function(){
 					var onStar = this.index;
 					addItems(onStar,aStars1);
+				}
+
+				aStars1[i].onmouseout = function(){
+					console.log(111);
 				}
 
 				aStars2[i].index = i+1;

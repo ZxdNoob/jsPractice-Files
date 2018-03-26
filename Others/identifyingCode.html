@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>验证码倒计时模拟</title>
+    <link rel="shortcut icon" href="../../jQueryPractices/img/myFavicon.ico" type="image/icon" />
+    <style>
+        html{
+            font:"Microsoft Yahei" 16px;
+            color:#666;
+        }
+        body,div,button,span{
+            margin: 0;
+            padding: 0;
+        }
+        i{
+            font-style: normal;
+        }
+        button{
+            outline: none;
+            border: none;
+            cursor: pointer;
+            width: 100px;
+            height: 36px;
+            line-height: 36px;
+            background-color: rgb(200,60,30);
+            color: white;
+        }
+        .wrapper{
+            width: 60%;
+            max-width: 600px;
+            margin: 10px auto;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <button id="btn">发送验证码</button>
+    </div>
+    <script>
+        var btn = document.getElementById("btn");
+        var init = "发送验证码";
+        var setTime = '<span>(<i id="time">60</i>)</span>';
+        var timer = null;
+        btn.onclick = function(){
+            if( btn.innerHTML == init ){
+                clearInterval(timer);               //先清除定时器，防止多个定时器一起打开
+                btn.innerHTML = init + setTime;
+                var time = document.getElementById("time");
+                var totTime = 60;
+                timer = setInterval(function() {
+                    btn.style.backgroundColor = "rgba(200,60,30,.6)";
+                    totTime --;
+                    if(totTime == 0){
+                        btn.style.backgroundColor = "rgb(200,60,30)";
+                        totTime = 0;
+                        btn.innerText = "发送验证码";
+                        clearInterval(timer);
+                    }
+                    time.innerHTML = totTime;
+                },1000);
+            }
+        };
+    </script>
+</body>
+</html>

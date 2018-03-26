@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>搜索</title>
+    <link rel="shortcut icon" href="../../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+</head>
+<style>
+    html{
+        color: #666;
+        font: "Microsoft Yahei" 18px;
+    }
+    body,header,div{
+        margin: 0;
+        padding: 0;
+    }
+    header{
+        width: 90%;
+        max-width: 900px;
+        min-width: 560px;
+        margin: 10px auto;
+    }
+    .search{
+        width: 100px;
+        height: 30px;
+        line-height: 30px;
+        border-radius: 20px;
+        background-color: rgba(171, 226, 247, .6);
+        margin: 6px auto;
+        display: flex;
+        align-items: center;
+        position: relative;
+        transition: all .6s ease;
+    }
+    .search .search-icon{
+        width: 20px;
+        height: 30px;
+        background-color: #e3d3d3;
+        position: absolute;
+        cursor: pointer;
+        background: url("./img/search-init.png") center no-repeat;
+        background-size: 16px;
+        left: 6px;
+    }
+    input{
+        width: 100%;
+        height: 100%;
+        line-height: 28px;
+        border: none;
+        background: none;
+        outline: none;
+        margin-left: 30px;
+        padding-left: 6px;
+    }
+</style>
+<body>
+    <header>
+        <div class="search" id="search">
+            <div class="search-icon" id="search-btn"></div>
+            <input type="search" placeholder="搜索" />
+        </div>
+    </header>
+</body>
+<script>
+    var initWidth = 100;
+    var changeWidth = 160;
+    var imgUrlArr = ["url(\"./img/search-init.png\")","url(\"./img/search-focus.png\")"];
+    var getId = function(id){
+        return document.getElementById(id);
+    };
+    var searchBox = getId("search");
+    var searchBtn = getId("search-btn");
+    var sch = searchBox.getElementsByTagName("input")[0];
+    sch.oninput = function(){
+        bgChange();
+    }
+    sch.onfocus = function(){
+        searchBox.style.width = changeWidth+"px";
+        if(sch.value !== ""){
+            bgChange();
+        }
+    };
+    sch.onblur = function(){
+        searchBox.style.width = initWidth+"px";
+        if(sch.value === ""){
+            searchBtn.style.backgroundImage = imgUrlArr[0];
+            searchBtn.style.backgroundSize = "16px";
+        }
+    };
+
+    function bgChange(){
+        searchBtn.style.backgroundImage = imgUrlArr[1];
+        searchBtn.style.backgroundSize = "20px";
+    }
+</script>
+</html>

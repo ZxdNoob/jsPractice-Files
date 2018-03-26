@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>任意代码</title>
+    <link rel="shortcut icon" href="../../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+</head>
+<body>
+    <script>
+        /*for(let i = 1;i < 6;i++){
+            console.log(i);
+        }
+        for(let j = 1;j < 8;j++){
+            let j = 9;
+            console.log(j);                 //输出了7次，外面作用域对立面作用域无影响
+        }
+        for(var i = 1; i < 9;i++){
+            console.log(i);
+        }
+        for(var i = 1; i < 9;i++){
+            var i = 20;
+            console.log(i);                 //只输出一次，内外作用域互相影响
+        }*/
+        //解构赋值
+        let { name,age,sex,friends } = { name:"左信道",age:27,sex:"男",friends:[{name:"赵丽颖",age:36,sex:"女"},{name:"张家辉",age:40,sex:"男"}] };
+        console.log(name,age,sex,friends[1]);
+        let [a,b,c] = "我是谁";
+        let str = "---";
+        console.log(a+str+b+str+c);
+    </script>
+</body>
+</html>

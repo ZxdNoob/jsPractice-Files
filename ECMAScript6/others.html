@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>补充</title>
+    <link rel="shortcut icon" href="../../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+</head>
+<body>
+    <script>
+        let cont = "笨蛋的修炼手册";
+        let html = `<h1 class="title">${cont}</h1>`;
+        let createD = document.createElement("div");
+        createD.innerHTML = html;
+        document.body.appendChild(createD);
+
+        //给形参设置默认值
+
+        //ES5中设置默认实参会用到能力检测法
+        function sum1(num1,num2){
+            var num1 = num1 || 10;
+            var num2 = num2 || 10;
+            console.log(num1+num2);
+        }
+        sum1(3,3);
+        sum1();
+
+        //ES6中则很方便地可以直接设置默认实参
+        function sum2(num1 = 30,num2 = 36){
+            console.log(num1+num2);
+        }
+        sum2(1,2);
+        sum2();
+
+        //扩展运算符在形参中的运用
+
+        //ES5遇到多个形参时要遍历内置arguments对象确定传递的实参数
+        function sum3(){
+            var result = 0;
+            for(var i of arguments){
+                result += i;
+            }
+            return result;
+        }
+
+        console.log(sum3(1,6,3,9));
+
+        //ES6中用扩展运算符可以省略遍历arguments对象
+        function sum4(...nums){
+            let result = 0;
+            for( let value of nums ){
+                result += value;
+            }
+
+            return result;
+        }
+
+        console.log(sum4(1,2,3,4,5,6));
+
+        function sum5(name,age,...nums){        //除了前两个形参name和age，其余所有形参归为nums
+            let result = 0;
+            console.log(name+"---"+age);
+            for( let value of nums ){
+                result += value;
+            }
+
+            return result;
+        }
+        console.log(sum5("赵云",19,1,6,6,6,8,9));
+
+        //箭头函数
+
+        let add = (a,b) => console.log(a+b);
+        add(5,6);
+
+        let obj = { name:"左信道",age:27,job:"前端开发工程师" };
+        let arr = [ 1,2,3,4,5,6 ];
+        arr.forEach(function(value,index){
+            console.log("数组元素:"+value+"---索引值："+index);
+        })
+        let arr2 = [ "a","b","c","d","e","f" ];
+        arr2.forEach((value,index) => {
+            console.log("数组元素:"+value+"---索引值："+index);
+        })
+
+        //消除this指向问题,箭头函数内部自动转换this，是谁就是谁，不会因call、apply和bind方法调用而改变
+        function test(){
+            setTimeout(function(){
+                console.log(this);
+            },1000)
+
+            setTimeout(() => {
+                console.log(this);
+            },1000)
+        }
+        test.call(obj);
+    </script>
+</body>
+</html>

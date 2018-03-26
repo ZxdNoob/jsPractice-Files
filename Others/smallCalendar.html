@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="../../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+    <title>小日历</title>
+    <style>
+        html{
+            font: "Microsoft Yahei" 14px;
+            color: #666;
+        }
+        body,div{
+            margin:0;padding:0;
+        }
+        #container{
+            width: 260px;
+            height: 280px;
+            border-radius: 10px;
+            box-shadow: 0 0 6px 0 rgba(20,20,20,.8);
+            padding: 10px;
+            background-color: skyblue;
+            margin: 60px auto;
+            text-align: center;
+        }
+        #container #date{
+            color: whitesmoke;
+            line-height: 60px;
+        }
+        #container #day{
+            color: rgba(203,20,10,.6);
+            font-size: 60px;
+            background-color: rgba(10, 214, 60,.3);
+            width: 130px;
+            margin: 10px auto;
+            height: 130px;
+            line-height: 130px;
+        }
+        #container #lunar-show{
+            width: 80%;
+            margin: 1rem auto;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="date"></div>
+        <div id="day"></div>
+        <div id="lunar-show"></div>
+    </div>
+</body>
+<script src="./methods/myCalendar.js"></script><!--引入阴历和阳历换算方法js文件-->
+<script>
+    // 通过id获取元素的方法
+    var getId = function(id){
+        return document.getElementById(id);
+    };
+    // 获取上下两个日历显示区域
+    var topShow = getId("date");
+    var botShow = getId("day");
+    // 获取阴历显示容器
+    var lunarShow = getId("lunar-show");
+    // 存储阴历算法所有方法
+    var lunar = calendar.solar2lunar();
+    // 获取日期：年、月、日、星期
+    var myDate = new Date();
+    var year = myDate.getFullYear();
+    var initM = myDate.getMonth()+1;                    //日期月份的初始格式
+    var initD = myDate.getDate();                       //日期日数的初始格式
+    var month = initM > 10 ? initM : "0" + initM;       //当日期的月份大于10时按初始格式输出，否则在头部加"0"
+    var theDay = initD > 10 ? initD : "0" + initD;      //当日期的日数大于10时按初始格式输出，否则在头部加"0"
+    var theWeek = myDate.getDay();
+    // 用数组保存星期，这个数组的索引正好对应getDay方法的结果
+    var weekArr = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+    // 在相应的区域填充内容
+    topShow.innerHTML = year+"-"+month+"-"+theDay+" "+weekArr[theWeek];
+    botShow.innerHTML = theDay;
+    lunarShow.innerHTML = "农历："+lunar.lYear + "年" +lunar.IMonthCn+lunar.IDayCn+"<br />"+lunar.gzYear+"年"+lunar.gzMonth+"月"+lunar.gzDay+"日（"+lunar.Animal+"年）";
+</script>
+</html>

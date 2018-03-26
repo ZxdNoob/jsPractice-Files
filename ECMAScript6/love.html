@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>ILOVEYOU!</title>
+    <link rel="shortcut icon" href="../../jQueryPractices/img/myFavicon.ico" type="image/x-icon" />
+    <style>
+        html{
+            font: "Microsoft Yahei" 18px;
+            color: #666;
+        }
+        body,div,button{
+            margin: 0;
+            padding: 0;
+        }
+        #content{
+            position: relative;
+            height: 60px;
+            box-shadow: 0 0 6px 0 #333;
+        }
+        #content #cont{
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+        }
+        #content,.btn-group{
+            width: 600px;
+            margin: 60px auto;
+            text-align: center;
+        }
+        button{
+            width: 60px;
+            height: 28px;
+            line-height: 22px;
+            background-color: rgba(20,60,100,.6);
+            color: #fce17e;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:last-child{
+            margin-right: 0;
+        }
+        button:hover{
+            color: #eff;
+        }
+        button#ctl{
+            color: red;
+            background-color: #dff;
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <div id="cont"></div>
+    </div>
+    <div class="btn-group">
+        <button id="btn-en">英文</button>
+        <button id="ctl">暂停</button>
+        <button id="btn-zh">中文</button>
+    </div>
+    <script>
+        let lovePart1 = "I love you,ZhangXianhong!";
+        let lovePart2 = "我爱你，张仙红！";
+        let cont = document.getElementById("cont");
+        let myLoveEn = document.getElementById("btn-en");
+        let ctl = document.getElementById("ctl");
+        let myLoveZh = document.getElementById("btn-zh");
+        let myTimer = null;
+        let timer = () => {
+                        moveNum += 20;
+                        if(moveNum>=380){
+                            moveNum = 0;
+                        }else{
+                            moveNum += 20;
+                        }
+                        cont.style.right = moveNum+"px";
+                    };
+        let moveNum = 20;
+        myLoveEn.onclick = function(){
+            cont.innerHTML = lovePart1;
+            clearInterval(myTimer);
+            myTimer = setInterval(timer,500);
+        };
+        myLoveZh.onclick = function(){
+            cont.innerHTML = lovePart2;
+            clearInterval(myTimer);
+            myTimer = setInterval(timer,500);
+        };
+        ctl.onclick = function(){
+            if(myTimer !== null){
+                if(this.innerHTML === "暂停"){
+                    this.innerHTML = "继续";
+                    this.style.color = "green";
+                    clearInterval(myTimer);
+                }else{
+                    clearInterval(myTimer);
+                    this.innerHTML = "暂停";
+                    this.style.color = "red";1
+                    myTimer = setInterval(timer,500);
+                }
+            }
+        };
+    </script>
+</body>
+</html>

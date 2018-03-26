@@ -41,23 +41,65 @@
             console.log("在字符串"+"\""+str+"\""+"中，出现次数最多的字符是"+char+"\n"+"它一共出现了"+max+"次");
         }
         search(ranChar);
-        /*var str2 = "abcdefffoooklskldjskjdujjpkj";
-        var obj = {};
-        for(var i = 0;i<str2.length;i++){
-            if(!obj[str2[i]]){                      //当obj为空时
-                obj[str2[i]] = str2[i];             //对象的键值是同名的字符串的每个字符
-            }else{
-                obj[str2[i]] += str2[i];            //重复的字符每重复一次就拼接一次
+
+        //方法二（将字符串中出现的每个不重复字符作为属性，属性值为重复出现的次数）
+        /*var myStr = "aaabbbccc1234999666";
+        var o = {};
+        for (var i = 0, length = myStr.length; i < length; i++) {
+            // var char = str[i];
+            var char = myStr.charAt(i);
+            if (o[char]) { //char就是对象o的一个属性，o[char]是属性值，o[char]控制出现的次数
+                o[char]++; //次数加1
+            } else {
+                o[char] = 1; //若第一次出现，次数记为1
+            }
+        }
+        console.log(o); //输出的是完整的对象，记录着每一个字符及其出现的次数
+        //遍历对象，找到出现次数最多的字符和次数
+        var maxTimes = 0;
+        var maxChar = null;
+        for (var key in o) {
+            if (maxTimes  < o[key]) {
+                maxTimes  = o[key]; //max始终储存次数最大的那个
+                maxChar = key; //那么对应的字符就是当前的key
+            }
+        }
+        console.log("最多的字符是" + maxChar);
+        console.log("出现的次数是" + maxTimes);*/
+
+        //方法三，在方法二基础上的改良，弥补当有多个字符的次数为最大但是只输出最前面的那个字符的不足
+        var myStr = "zuoxindaozhangxianhongzuoaiwenzhouguilianzuoruoxidouhenbang";
+        var o = {};
+        var maxStrArr = [];                     //用来存放出现最大次数的所有字符
+        for (var i = 0, length = myStr.length; i < length; i++) {
+            // var char = str[i];
+            var char = myStr.charAt(i);
+            if (o[char]) { //char就是对象o的一个属性，o[char]是属性值，o[char]控制出现的次数
+                o[char]++; //次数加1
+            } else {
+                o[char] = 1; //若第一次出现，次数记为1
+            }
+        }
+        console.log(o); //输出的是完整的对象，记录着每一个字符及其出现的次数
+        //遍历对象，找到出现次数最多的字符和次数
+        var maxTimes = 0;
+        var maxChar = null;
+        for (var key in o) {
+            if (maxTimes  < o[key]) {
+                maxTimes  = o[key]; //max始终储存次数最大的那个
             }
         }
 
-        for(var i = 0;i<str2.length;i++){
-            if(obj[str2[i]].length > max){
-                max = obj[str2[i]].length;              //将最大长度赋给max
-                char = str2[i];
+        for (var key in o) {
+            if (o[key] == maxTimes) {               //属性值为最大次数时
+                maxStrArr.push(key);
             }
         }
-        console.log("在字符串"+"\""+str2+"\""+"中，出现次数最多的字符是"+char+"\n"+"它一共出现了"+max+"次");*/
+
+        console.log("字符串中相同字符出现的最大次数为："+maxTimes+"，出现最大次数的字符如下：");
+        for(var i = 0,mLen = maxStrArr.length;i<mLen;i++){
+            console.log(maxStrArr[i]);
+        }
     </script>
 </head>
 <body>
